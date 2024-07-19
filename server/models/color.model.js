@@ -13,7 +13,12 @@ const colorSchema = new Schema(
             required: true,
         },
         code: {
-            type: String,
+            type: Number,
+            required: true,
+            trim: true,
+        },
+        price: {
+            type: Number,
             required: true,
             trim: true,
         },
