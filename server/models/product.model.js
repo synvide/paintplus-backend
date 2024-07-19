@@ -2,14 +2,55 @@ import mongoose, { Schema } from 'mongoose';
 
 const productSchema = new Schema(
     {
-        title: {
+        name: {
             type: String,
             required: true,
             trim: true,
         },
+        type: {
+            type: String,
+        },
+        shortDescription: {
+            type: String,
+        },
+        longDescription: {
+            type: String,
+        },
         quantity: {
             type: String,
-            required: true,
+        },
+        group: {
+            type: String,
+        },
+        subGroup: {
+            type: String,
+        },
+        brand: {
+            type: String,
+        },
+        weight: {
+            type: Number,
+        },
+        length: {
+            type: Number,
+        },
+        width: {
+            type: Number,
+        },
+        height: {
+            type: Number,
+        },
+        manufacturingDate: {
+            type: Date,
+        },
+        expiryDate: {
+            type: Date,
+        },
+        specialFeature: {
+            type: String,
+        },
+        mrp: {
+            type: Number,
         },
         sellingPrice: {
             type: String,
@@ -20,28 +61,13 @@ const productSchema = new Schema(
                 type: String,
             },
         ],
-        markPrice: {
-            type: Number,
-        },
-        offerPercent: {
-            type: Number,
-        },
         warranty: {
-            type: String,
-        },
-        brand: {
             type: String,
         },
         colour: {
             type: String,
         },
         finishType: {
-            type: String,
-        },
-        size: {
-            type: String,
-        },
-        specialFeature: {
             type: String,
         },
         about: [
