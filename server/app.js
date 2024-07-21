@@ -17,6 +17,10 @@ app.use(busboyBodyParser());
 ActivateRoutes(app);
 app.use(cookieParser());
 
+app.get('/', (_, res) => {
+    res.send('<h1>Paint Plus Development Server</h1>');
+});
+
 const port = PORT || 3001;
 try {
     app.listen(port, () => {
