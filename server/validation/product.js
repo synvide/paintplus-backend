@@ -16,7 +16,13 @@ const productValidationHandler = ({
 };
 
 export default {
-    addProduct: (req, res, next) => productValidationHandler({
-        req, res, next, schema: ProductJoiSchema.addProduct,
+    productAdd: (req, res, next) => productValidationHandler({
+        req, res, next, schema: ProductJoiSchema.productAdd,
+    }),
+    productList: (req, res, next) => productValidationHandler({
+        req, res, next, schema: ProductJoiSchema.productList,
+    }),
+    productDetail: (req, res, next) => productValidationHandler({
+        req, res, next, schema: ProductJoiSchema.productDetail,
     }),
 };

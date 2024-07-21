@@ -3,30 +3,34 @@
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import { ApiErrorUtility } from '../utility';
-import { AdminModel } from '../models';
+import { AdminModel, CustomerModel } from '../models';
 import { ACCESS_TOKEN_SECRET } from '../constants';
 
-const prepareDecodedData = ({ authorization, type }) => new Promise(async (resolve, reject) => {
-    const decodedData = jwt.verify(authorization, ACCESS_TOKEN_SECRET);
-    let userData;
-    if (decodedData) {
-        const { data: { email, id, role } } = decodedData;
-        if (role === type) {
-            if (role === 'user') {
-                userData = await AdminModel.findOne({ _id: id });
-            } else {
-                userData = await AdminModel.findOne({ _id: id });
-            }
-            if (!userData) {
-                reject();
-            }
+const prepareDecodedData = ({ token, type }) => new Promise(async (resolve, reject) => {
+    try {
+        const decodedData = jwt.verify(token, ACCESS_TOKEN_SECRET);
+        let userData;
+        if (decodedData) {
+            const { email, id, role } = decodedData;
+            if (role === type) {
+                if (role === 'customer') {
+                    userData = await CustomerModel.findOne({ _id: id });
+                } else {
+                    userData = await AdminModel.findOne({ _id: id });
+                }
+                if (!userData) {
+                    reject();
+                }
 
-            resolve({
-                id, email, type,
-            });
+                resolve({
+                    id, email, type,
+                });
+            }
         }
+        reject();
+    } catch (err) {
+        reject();
     }
-    reject();
 });
 const commonDecodingHandler = ({
     req,
@@ -51,8 +55,8 @@ const commonDecodingHandler = ({
 };
 
 export default {
-    authenticateUser: (req, res, next) => commonDecodingHandler({
-        req, res, next, type: 'user',
+    authenticateCustomer: (req, res, next) => commonDecodingHandler({
+        req, res, next, type: 'customer',
     }),
     authenticateAdmin: (req, res, next) => commonDecodingHandler({
         req, res, next, type: 'admin',

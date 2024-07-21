@@ -3,16 +3,15 @@
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService } from '../../services';
-import { AdminModel } from '../../models';
-import { SECRET_STRING } from '../../constants';
+import { DealerModel } from '../../models';
 
-const AdminSignup = ({
+const dealerAdd = ({
     email,
     password,
-    secretKey,
+    occupation,
     firstName,
     lastName,
-    image,
+    shopImage,
     gender,
     dob,
     countryCode,
@@ -27,31 +26,26 @@ const AdminSignup = ({
     pincode,
     geoLocationCode,
     status,
-    idProofType,
-    idProofNumber,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const emailExists = await AdminModel.findOne({ email: email.toLowerCase() });
+        const emailExists = await DealerModel.findOne({ email: email.toLowerCase() });
         if (emailExists) {
             reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
         }
 
-        if (secretKey !== SECRET_STRING) {
-            reject(new ApiErrorUtility({ message: 'Invalid Authorization' }));
-        }
-
         let imageUrl;
-        if (image) {
-            const imageName = `admin-image-${Date.now()}`;
-            imageUrl = await ImageUploadService(imageName, image);
+        if (shopImage) {
+            const imageName = `dealer-image-${Date.now()}`;
+            imageUrl = await ImageUploadService(imageName, shopImage);
         }
 
-        const adminObject = new AdminModel({
+        const adminObject = new DealerModel({
             email,
             password,
             firstName,
             lastName,
-            image: imageUrl,
+            shopImage: imageUrl,
+            occupation,
             gender,
             dob,
             countryCode,
@@ -66,20 +60,18 @@ const AdminSignup = ({
             pincode,
             geoLocationCode,
             status,
-            idProofType,
-            idProofNumber,
         });
         await adminObject.save();
 
-        const admin = await AdminModel.findById(adminObject._id).select('-password -__v');
-        if (!admin) {
-            reject(new ApiErrorUtility({ statusCode: 501, message: 'Something went wrong while registering admin' }));
+        const dealer = await DealerModel.findById(adminObject._id).select('-password -__v');
+        if (!dealer) {
+            reject(new ApiErrorUtility({ statusCode: 501, message: 'Something went wrong while adding dealer' }));
         }
 
-        resolve(new ApiResponseUtility({ message: 'Admin has signed up successfully!', data: admin }));
+        resolve(new ApiResponseUtility({ message: 'Dealer added successfully!', data: dealer }));
     } catch (error) {
         reject(new ApiErrorUtility({ message: 'Invalid Authorization', error }));
     }
 });
 
-export default AdminSignup;
+export default dealerAdd;

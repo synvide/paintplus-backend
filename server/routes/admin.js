@@ -1,16 +1,52 @@
+/* eslint-disable max-len */
 /* eslint-disable import/named */
-import { AdminSignupController, AdminLoginController, AdminAddProductController } from '../controllers/admin';
+import {
+    AdminSignupController, AdminLoginController, AdminProductAddController, AdminProductDetailController, AdminDealerAddController, AdminDealerLinkController,
+} from '../controllers/admin';
 import { ResolverUtility } from '../utility';
-import { MultipartService } from '../services';
-import { AdminValidator } from '../validation';
+import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
+import {
+    AdminValidator, ProductValidator, DealerValidator, ProductDealerValidator,
+} from '../validation';
 
 const prefix = '/api/admin/';
 
 export default (app) => {
-    app.post(`${prefix}signup`, MultipartService, AdminValidator.signup, (req, res) => ResolverUtility(req, res, AdminSignupController));
-    app.post(`${prefix}login`, AdminValidator.login, (req, res) => ResolverUtility(req, res, AdminLoginController));
-    app.post(`${prefix}product/add`, AdminValidator.login, (req, res) => ResolverUtility(req, res, AdminAddProductController));
-    app.post(`${prefix}product/detail`, AdminValidator.login, (req, res) => ResolverUtility(req, res, AdminAddProductController));
-    app.post(`${prefix}product/update`, AdminValidator.login, (req, res) => ResolverUtility(req, res, AdminAddProductController));
-    app.post(`${prefix}product/add`, AdminValidator.login, (req, res) => ResolverUtility(req, res, AdminAddProductController));
+    app.post(
+        `${prefix}signup`,
+        MultipartMiddleware,
+        AdminValidator.signup,
+        (req, res) => ResolverUtility(req, res, AdminSignupController),
+    );
+    app.post(
+        `${prefix}login`,
+        AdminValidator.login,
+        (req, res) => ResolverUtility(req, res, AdminLoginController),
+    );
+    app.post(
+        `${prefix}product/add`,
+        MultipartMiddleware,
+        AuthenticationMiddleware.authenticateAdmin,
+        ProductValidator.productAdd,
+        (req, res) => ResolverUtility(req, res, AdminProductAddController),
+    );
+    app.post(
+        `${prefix}product/detail`,
+        AuthenticationMiddleware.authenticateAdmin,
+        ProductValidator.productDetail,
+        (req, res) => ResolverUtility(req, res, AdminProductDetailController),
+    );
+    app.post(
+        `${prefix}dealer/add`,
+        MultipartMiddleware,
+        AuthenticationMiddleware.authenticateAdmin,
+        DealerValidator.dealerAdd,
+        (req, res) => ResolverUtility(req, res, AdminDealerAddController),
+    );
+    app.post(
+        `${prefix}dealer/link`,
+        AuthenticationMiddleware.authenticateAdmin,
+        ProductDealerValidator.linkProductWithDealer,
+        (req, res) => ResolverUtility(req, res, AdminDealerLinkController),
+    );
 };

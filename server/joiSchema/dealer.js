@@ -22,7 +22,7 @@ const pincode = Joi.number();
 const geoLocationCode = Joi.string();
 const status = Joi.string();
 
-const signup = Joi.object().keys({
+const add = Joi.object().keys({
     email: email.required(),
     password: password.required(),
     firstName: firstName.required(),
@@ -51,6 +51,6 @@ const login = Joi.object().keys({
 }).unknown(true);
 
 export default {
-    signup,
+    add,
     login,
 };

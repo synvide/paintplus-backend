@@ -122,9 +122,9 @@ adminSchema.methods.isPasswordCorrect = async function (password) {
 adminSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
-            _id: this._id,
+            id: this._id,
             email: this.email,
-            type: 'admin',
+            role: 'admin',
         },
         ACCESS_TOKEN_SECRET,
         {

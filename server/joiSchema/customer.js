@@ -50,7 +50,20 @@ const login = Joi.object().keys({
     password: password.required(),
 }).unknown(true);
 
+const productList = Joi.object().keys({
+    page: Joi.number(),
+    limit: Joi.number(),
+    minimumPrice: Joi.number(),
+    maximumPrice: Joi.number(),
+    brands: Joi.array(),
+    discount: Joi.number(),
+    applicationType: Joi.array(),
+    finishType: Joi.array(),
+    paintType: Joi.array(),
+}).unknown(true);
+
 export default {
     signup,
     login,
+    productList,
 };

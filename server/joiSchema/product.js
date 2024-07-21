@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Joi from 'joi';
 
-const addProduct = Joi.object().keys({
+const productAdd = Joi.object().keys({
     name: Joi.string().required(),
     type: Joi.string().required(),
     shortDescription: Joi.string(),
@@ -19,6 +19,7 @@ const addProduct = Joi.object().keys({
     specialFeature: Joi.string(),
     mrp: Joi.number().required(),
     sellingPrice: Joi.number().required(),
+    tax: Joi.number().required(),
     image1: Joi.object(),
     image2: Joi.object(),
     image3: Joi.object(),
@@ -31,7 +32,7 @@ const addProduct = Joi.object().keys({
 }).unknown(true);
 
 export default {
-    addProduct,
+    productAdd,
 };
 
 // name

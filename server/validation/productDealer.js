@@ -1,8 +1,8 @@
 /* eslint-disable import/named */
 import { ValidatorUtility, ApiErrorUtility } from '../utility';
-import { DealerJoiSchema } from '../joiSchema';
+import { ProductDealerJoiSchema } from '../joiSchema';
 
-const dealerValidationHandler = ({
+const customerValidationHandler = ({
     req,
     res,
     next,
@@ -16,10 +16,7 @@ const dealerValidationHandler = ({
 };
 
 export default {
-    dealerAdd: (req, res, next) => dealerValidationHandler({
-        req, res, next, schema: DealerJoiSchema.add,
-    }),
-    dealerLogin: (req, res, next) => dealerValidationHandler({
-        req, res, next, schema: DealerJoiSchema.login,
+    linkProductWithDealer: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: ProductDealerJoiSchema.linkProductWithDealer,
     }),
 };

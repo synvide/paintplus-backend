@@ -53,14 +53,28 @@ const productSchema = new Schema(
             type: Number,
         },
         sellingPrice: {
-            type: String,
+            type: Number,
             required: true,
         },
-        images: [
-            {
-                type: String,
-            },
-        ],
+        tax: {
+            type: Number,
+            required: true,
+        },
+        image1: {
+            type: String,
+        },
+        image2: {
+            type: String,
+        },
+        image3: {
+            type: String,
+        },
+        image4: {
+            type: String,
+        },
+        image5: {
+            type: String,
+        },
         warranty: {
             type: String,
         },

@@ -113,9 +113,9 @@ customerSchema.methods.isPasswordCorrect = async function (password) {
 customerSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
-            _id: this._id,
+            id: this._id,
             email: this.email,
-            type: 'admin',
+            role: 'customer',
         },
         ACCESS_TOKEN_SECRET,
         {

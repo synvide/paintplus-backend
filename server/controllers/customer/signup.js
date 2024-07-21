@@ -3,16 +3,15 @@
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService } from '../../services';
-import { AdminModel } from '../../models';
-import { SECRET_STRING } from '../../constants';
+import { CustomerModel } from '../../models';
 
-const AdminSignup = ({
+const CustomerSignup = ({
     email,
     password,
-    secretKey,
     firstName,
     lastName,
-    image,
+    profilePicture,
+    occupation,
     gender,
     dob,
     countryCode,
@@ -27,31 +26,26 @@ const AdminSignup = ({
     pincode,
     geoLocationCode,
     status,
-    idProofType,
-    idProofNumber,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const emailExists = await AdminModel.findOne({ email: email.toLowerCase() });
+        const emailExists = await CustomerModel.findOne({ email: email.toLowerCase() });
         if (emailExists) {
             reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
         }
 
-        if (secretKey !== SECRET_STRING) {
-            reject(new ApiErrorUtility({ message: 'Invalid Authorization' }));
+        let profilePictureUrl;
+        if (profilePicture) {
+            const profilePictureName = `admin-image-${Date.now()}`;
+            profilePictureUrl = await ImageUploadService(profilePictureName, profilePicture);
         }
 
-        let imageUrl;
-        if (image) {
-            const imageName = `admin-image-${Date.now()}`;
-            imageUrl = await ImageUploadService(imageName, image);
-        }
-
-        const adminObject = new AdminModel({
+        const customerObject = new CustomerModel({
             email,
             password,
             firstName,
             lastName,
-            image: imageUrl,
+            profilePicture: profilePictureUrl,
+            occupation,
             gender,
             dob,
             countryCode,
@@ -66,20 +60,18 @@ const AdminSignup = ({
             pincode,
             geoLocationCode,
             status,
-            idProofType,
-            idProofNumber,
         });
-        await adminObject.save();
+        await customerObject.save();
 
-        const admin = await AdminModel.findById(adminObject._id).select('-password -__v');
-        if (!admin) {
-            reject(new ApiErrorUtility({ statusCode: 501, message: 'Something went wrong while registering admin' }));
+        const customer = await CustomerModel.findById(customerObject._id).select('-password -__v');
+        if (!customer) {
+            reject(new ApiErrorUtility({ statusCode: 501, message: 'Something went wrong while registering customer' }));
         }
 
-        resolve(new ApiResponseUtility({ message: 'Admin has signed up successfully!', data: admin }));
+        resolve(new ApiResponseUtility({ message: 'Customer has signed up successfully!', data: customer }));
     } catch (error) {
-        reject(new ApiErrorUtility({ message: 'Invalid Authorization', error }));
+        reject(new ApiErrorUtility({ message: 'Error while customer signup', error }));
     }
 });
 
-export default AdminSignup;
+export default CustomerSignup;
