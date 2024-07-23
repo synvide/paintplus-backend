@@ -10,14 +10,14 @@ const AdminLogin = ({
     try {
         const adminExists = await AdminModel.findOne({ email: email.toLowerCase() });
         if (!adminExists) {
-            reject(new ApiErrorUtility({ message: 'Account not found' }));
+            return reject(new ApiErrorUtility({ message: 'Account not found' }));
         }
         const passwordMatch = await adminExists.isPasswordCorrect(password);
         if (!passwordMatch) {
-            reject(new ApiErrorUtility({ message: 'Incorrect password' }));
+            return reject(new ApiErrorUtility({ message: 'Incorrect password' }));
         }
 
-        resolve(new ApiResponseUtility({
+        return resolve(new ApiResponseUtility({
             message: 'Admin logged in successfully',
             data: {
                 accessToken: await adminExists.generateAccessToken(),

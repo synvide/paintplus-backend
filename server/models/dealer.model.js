@@ -120,7 +120,7 @@ dealerSchema.methods.generateAccessToken = function () {
         {
             _id: this._id,
             email: this.email,
-            type: 'admin',
+            role: 'dealer',
         },
         ACCESS_TOKEN_SECRET,
         {

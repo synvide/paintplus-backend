@@ -4,7 +4,8 @@ import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService } from '../../services';
 import { ProductModel } from '../../models';
 
-const ProductAdd = ({
+const ProductUpdate = ({
+    productId,
     name,
     productType,
     shortDescription,
@@ -59,40 +60,42 @@ const ProductAdd = ({
             const imageName = `product-image-${Date.now()}`;
             imageUrl5 = await ImageUploadService(imageName, image5);
         }
-        const product = await new ProductModel({
-            name,
-            productType,
-            shortDescription,
-            longDescription,
-            quantity,
-            group,
-            subGroup,
-            brand,
-            weight,
-            length,
-            width,
-            height,
-            manufacturingDate,
-            expiryDate,
-            specialFeature,
-            mrp,
-            sellingPrice,
-            tax,
-            image1: imageUrl1,
-            image2: imageUrl2,
-            image3: imageUrl3,
-            image4: imageUrl4,
-            image5: imageUrl5,
-            warranty,
-            colour,
-            finishType,
-            about: about.length ? JSON.parse(about) : [],
-        }).save();
+        const updatedProduct = await ProductModel.findByIdAndUpdate(productId, {
+            $set: {
+                name,
+                productType,
+                shortDescription,
+                longDescription,
+                quantity,
+                group,
+                subGroup,
+                brand,
+                weight,
+                length,
+                width,
+                height,
+                manufacturingDate,
+                expiryDate,
+                specialFeature,
+                mrp,
+                sellingPrice,
+                tax,
+                image1: imageUrl1,
+                image2: imageUrl2,
+                image3: imageUrl3,
+                image4: imageUrl4,
+                image5: imageUrl5,
+                warranty,
+                colour,
+                finishType,
+                about: about.length ? JSON.parse(about) : undefined,
+            },
+        }, { new: true });
 
-        resolve(new ApiResponseUtility({ message: 'Product added successfully!', data: product }));
+        resolve(new ApiResponseUtility({ message: 'Product updated successfully!', data: updatedProduct }));
     } catch (error) {
-        reject(new ApiErrorUtility({ message: 'Error while adding product', error }));
+        reject(new ApiErrorUtility({ message: 'Error while updating product', error }));
     }
 });
 
-export default ProductAdd;
+export default ProductUpdate;
