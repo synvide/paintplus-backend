@@ -261,7 +261,13 @@ const ProductList = ({
                         ],
                     },
                     tax: '$tax',
-                    images: ['$image1', '$image2', '$image3', '$image4', '$image5'],
+                    images: {
+                        $filter: {
+                            input: ['$image1', '$image2', '$image3', '$image4', '$image5'],
+                            as: 'image',
+                            cond: { $ne: ['$$image', null] },
+                        },
+                    },
                     warranty: '$warranty',
                     colour: '$colour',
                     finishType: '$finishType',
