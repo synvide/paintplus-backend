@@ -28,6 +28,9 @@ const productSchema = new Schema(
         brand: {
             type: String,
         },
+        brandImage: {
+            type: String,
+        },
         weight: {
             type: Number,
         },

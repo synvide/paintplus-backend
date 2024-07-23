@@ -14,6 +14,7 @@ const ProductUpdate = ({
     group,
     subGroup,
     brand,
+    brandImage,
     weight,
     length,
     width,
@@ -40,6 +41,7 @@ const ProductUpdate = ({
         let imageUrl3;
         let imageUrl4;
         let imageUrl5;
+        let brandImageUrl;
         if (image1) {
             const imageName = `product-image-${Date.now()}`;
             imageUrl1 = await ImageUploadService(imageName, image1);
@@ -60,6 +62,10 @@ const ProductUpdate = ({
             const imageName = `product-image-${Date.now()}`;
             imageUrl5 = await ImageUploadService(imageName, image5);
         }
+        if (brandImage) {
+            const imageName = `productBrand-image-${Date.now()}`;
+            brandImageUrl = await ImageUploadService(imageName, brandImage);
+        }
         const updatedProduct = await ProductModel.findByIdAndUpdate(productId, {
             $set: {
                 name,
@@ -70,6 +76,7 @@ const ProductUpdate = ({
                 group,
                 subGroup,
                 brand,
+                brandImage: brandImageUrl,
                 weight,
                 length,
                 width,

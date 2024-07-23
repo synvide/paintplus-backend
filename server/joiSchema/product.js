@@ -10,6 +10,7 @@ const productAdd = Joi.object().keys({
     group: Joi.string(),
     subGroup: Joi.string(),
     brand: Joi.string().required(),
+    brandImage: Joi.object(),
     weight: Joi.number().required(),
     length: Joi.number().required(),
     width: Joi.number().required(),

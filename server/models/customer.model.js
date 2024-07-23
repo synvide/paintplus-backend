@@ -13,7 +13,7 @@ const customerSchema = new Schema(
         },
         lastName: {
             type: String,
-            required: true,
+            // required: true,
             trim: true,
         },
         gender: {
@@ -23,7 +23,7 @@ const customerSchema = new Schema(
         },
         dob: {
             type: Date,
-            required: true,
+            // required: true,
         },
         occupation: {
             type: String,
@@ -44,41 +44,41 @@ const customerSchema = new Schema(
         },
         countryCode: {
             type: String,
-            required: true,
+            // required: true,
         },
         phoneNumber: {
             type: String,
-            required: true,
+            // required: true,
         },
         alternatePhoneNumber: {
             type: String,
         },
         addressLine1: {
             type: String,
-            required: true,
+            // required: true,
         },
         addressLine2: {
             type: String,
-            required: true,
+            // required: true,
         },
         landmark: {
             type: String,
         },
         city: {
             type: String,
-            required: true,
+            // required: true,
         },
         state: {
             type: String,
-            required: true,
+            // required: true,
         },
         country: {
             type: String,
-            required: true,
+            // required: true,
         },
         pincode: {
             type: Number,
-            required: true,
+            // required: true,
         },
         geoLocationCode: {
             type: String,
