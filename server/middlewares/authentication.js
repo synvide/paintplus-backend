@@ -11,7 +11,7 @@ const prepareDecodedData = ({ token, type }) => new Promise(async (resolve, reje
         const decodedData = jwt.verify(token, ACCESS_TOKEN_SECRET);
         let userData;
         if (decodedData) {
-            const { email, id, role } = decodedData;
+            const { id, role } = decodedData;
             if (role === type) {
                 if (role === 'customer') {
                     userData = await CustomerModel.findOne({ _id: id });
@@ -23,7 +23,7 @@ const prepareDecodedData = ({ token, type }) => new Promise(async (resolve, reje
                 }
 
                 resolve({
-                    id, email, type,
+                    id, type,
                 });
             }
         }

@@ -20,7 +20,6 @@ const state = Joi.string();
 const country = Joi.string();
 const pincode = Joi.number();
 const geoLocationCode = Joi.string();
-const status = Joi.string();
 
 const signup = Joi.object().keys({
     email: email.required(),
@@ -34,15 +33,6 @@ const signup = Joi.object().keys({
     countryCode,
     phoneNumber,
     alternatePhoneNumber,
-    addressLine1,
-    addressLine2,
-    landmark,
-    city,
-    state,
-    country,
-    pincode,
-    geoLocationCode,
-    status,
 }).unknown(true);
 
 const login = Joi.object().keys({
@@ -70,9 +60,21 @@ const productDetail = Joi.object().keys({
     productId: Joi.string().required(),
 }).unknown(true);
 
+const addAddress = Joi.object().keys({
+    addressLine1,
+    addressLine2,
+    landmark,
+    city,
+    state,
+    country,
+    pincode,
+    geoLocationCode,
+}).unknown(true);
+
 export default {
     signup,
     login,
     productList,
     productDetail,
+    addAddress,
 };
