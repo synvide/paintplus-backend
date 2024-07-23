@@ -13,6 +13,7 @@ const ProductAdd = ({
     group,
     subGroup,
     brand,
+    brandImage,
     weight,
     length,
     width,
@@ -39,6 +40,7 @@ const ProductAdd = ({
         let imageUrl3;
         let imageUrl4;
         let imageUrl5;
+        let brandImageUrl;
         if (image1) {
             const imageName = `product-image-${Date.now()}`;
             imageUrl1 = await ImageUploadService(imageName, image1);
@@ -59,6 +61,10 @@ const ProductAdd = ({
             const imageName = `product-image-${Date.now()}`;
             imageUrl5 = await ImageUploadService(imageName, image5);
         }
+        if (brandImage) {
+            const imageName = `productBrand-image-${Date.now()}`;
+            brandImageUrl = await ImageUploadService(imageName, brandImage);
+        }
         const product = await new ProductModel({
             name,
             productType,
@@ -68,6 +74,7 @@ const ProductAdd = ({
             group,
             subGroup,
             brand,
+            brandImage: brandImageUrl,
             weight,
             length,
             width,
