@@ -2,35 +2,35 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { CustomerModel } from '../../models';
+import { DealerModel } from '../../models';
 
-const CustomerLogin = ({
+const DealerLogin = ({
     email, password,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const customerExists = await CustomerModel.findOne({ email: email.toLowerCase() });
-        if (!customerExists) {
+        const dealerExists = await DealerModel.findOne({ email: email.toLowerCase() });
+        if (!dealerExists) {
             return reject(new ApiErrorUtility({ message: 'Account not found' }));
         }
-        const passwordMatch = await customerExists.isPasswordCorrect(password);
+        const passwordMatch = await dealerExists.isPasswordCorrect(password);
         if (!passwordMatch) {
             return reject(new ApiErrorUtility({ message: 'Incorrect password' }));
         }
 
         return resolve(new ApiResponseUtility({
-            message: 'Customer logged in successfully',
+            message: 'Dealer logged in successfully',
             data: {
-                accessToken: await customerExists.generateAccessToken(),
+                accessToken: await dealerExists.generateAccessToken(),
                 admin: {
-                    email: customerExists.email,
-                    createdAt: customerExists.createdAt,
+                    email: dealerExists.email,
+                    createdAt: dealerExists.createdAt,
                 },
             },
         }));
     } catch (error) {
         console.log(error);
-        reject(new ApiErrorUtility({ message: 'Error while customer login', error }));
+        reject(new ApiErrorUtility({ message: 'Error while dealer login', error }));
     }
 });
 
-export default CustomerLogin;
+export default DealerLogin;

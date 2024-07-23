@@ -1,161 +1,20 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
+import { Types } from 'mongoose';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ProductModel } from '../../models';
 
-const ProductList = ({
-    text,
-    limit = 10,
-    page = 1,
-    minimumPrice,
-    maximumPrice,
-    brands,
-    discount,
-    applicationType,
-    finishType,
-    paintType,
-    highToLowPriceSort,
-    lowToHighPriceSort,
-    newestArrivalsSort,
+const ProductDetail = ({
+    productId,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const searchQuery = [];
-        if (text) {
-            searchQuery.push({
+        const [data] = await ProductModel.aggregate([
+            {
                 $match: {
-                    $or: [
-                        { name: { $regex: new RegExp(text, 'i') } },
-                        { shortDescription: { $regex: new RegExp(text, 'i') } },
-                        { longDescription: { $regex: new RegExp(text, 'i') } },
-                        { group: { $regex: new RegExp(text, 'i') } },
-                        { subGroup: { $regex: new RegExp(text, 'i') } },
-                        { brand: { $regex: new RegExp(text, 'i') } },
-                        { specialFeature: { $regex: new RegExp(text, 'i') } },
-                    ],
+                    _id: new Types.ObjectId(productId),
                 },
-            });
-        }
-
-        const priceFilter = [];
-        if (minimumPrice && maximumPrice) {
-            priceFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $gte: ['$sellingPrice', minimumPrice],
-                            },
-                            {
-                                $lte: ['$sellingPrice', maximumPrice],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const brandFilter = [];
-        if (brands) {
-            brandFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$brand', brands],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const discountFilter = [];
-        if (discount) {
-            discountFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $gte: ['$discountPercentage', discount],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const applicationTypeFilter = [];
-        if (applicationType) {
-            applicationTypeFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$group', applicationType],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const finishTypeFilter = [];
-        if (finishType) {
-            finishTypeFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$finishType', finishType],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const paintTypeFilter = [];
-        if (paintType) {
-            paintTypeFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$type', paintType],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const sortFilter = {};
-        if (highToLowPriceSort) {
-            sortFilter.$sort = {
-                sellingPrice: -1,
-            };
-        } else if (lowToHighPriceSort) {
-            sortFilter.$sort = {
-                sellingPrice: 1,
-            };
-        } else if (newestArrivalsSort) {
-            sortFilter.$sort = {
-                createdAt: -1,
-            };
-        } else {
-            sortFilter.$sort = {
-                createdAt: -1,
-            };
-        }
-
-        const products = await ProductModel.aggregate([
-            ...searchQuery,
-            ...priceFilter,
-            ...brandFilter,
-            ...applicationTypeFilter,
-            ...finishTypeFilter,
-            ...paintTypeFilter,
+            },
             {
                 $lookup: {
                     from: 'productdealers',
@@ -275,23 +134,20 @@ const ProductList = ({
                     updatedAt: '$updatedAt',
                 },
             },
-            ...discountFilter,
-            sortFilter,
-            {
-                $skip: (page - 1) * limit,
-            },
-            {
-                $limit: limit,
-            }]);
+        ]);
+
+        if (!data) {
+            reject(new ApiErrorUtility({ message: 'No product found' }));
+        }
 
         resolve(new ApiResponseUtility({
-            message: 'Product list fetched successfully.',
-            data: products,
+            message: 'Product details fetched successfully.',
+            data,
         }));
     } catch (error) {
         console.log(error);
-        reject(new ApiErrorUtility({ message: 'Error while fetching products', error }));
+        reject(new ApiErrorUtility({ message: 'Error while fetching product details.', error }));
     }
 });
 
-export default ProductList;
+export default ProductDetail;

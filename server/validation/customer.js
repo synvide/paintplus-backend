@@ -25,4 +25,7 @@ export default {
     productList: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.productList,
     }),
+    productDetail: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.productDetail,
+    }),
 };

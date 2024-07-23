@@ -51,6 +51,7 @@ const login = Joi.object().keys({
 }).unknown(true);
 
 const productList = Joi.object().keys({
+    text: Joi.string(),
     page: Joi.number(),
     limit: Joi.number(),
     minimumPrice: Joi.number(),
@@ -60,10 +61,18 @@ const productList = Joi.object().keys({
     applicationType: Joi.array(),
     finishType: Joi.array(),
     paintType: Joi.array(),
+    highToLowPriceSort: Joi.number(),
+    lowToHighPriceSort: Joi.number(),
+    newestArrivalsSort: Joi.number(),
+}).unknown(true);
+
+const productDetail = Joi.object().keys({
+    productId: Joi.string().required(),
 }).unknown(true);
 
 export default {
     signup,
     login,
     productList,
+    productDetail,
 };
