@@ -6,6 +6,7 @@ import { ImageUploadService } from '../../services';
 import { DealerModel } from '../../models';
 
 const dealerAdd = ({
+    id,
     email,
     password,
     occupation,
@@ -40,6 +41,7 @@ const dealerAdd = ({
         }
 
         const adminObject = new DealerModel({
+            adminRef: id,
             email,
             password,
             firstName,

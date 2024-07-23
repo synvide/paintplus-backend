@@ -28,4 +28,7 @@ export default {
     productDetail: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.productDetail,
     }),
+    adAddress: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.adAddress,
+    }),
 };

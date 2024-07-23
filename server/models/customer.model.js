@@ -53,36 +53,6 @@ const customerSchema = new Schema(
         alternatePhoneNumber: {
             type: String,
         },
-        addressLine1: {
-            type: String,
-            // required: true,
-        },
-        addressLine2: {
-            type: String,
-            // required: true,
-        },
-        landmark: {
-            type: String,
-        },
-        city: {
-            type: String,
-            // required: true,
-        },
-        state: {
-            type: String,
-            // required: true,
-        },
-        country: {
-            type: String,
-            // required: true,
-        },
-        pincode: {
-            type: Number,
-            // required: true,
-        },
-        geoLocationCode: {
-            type: String,
-        },
         status: {
             type: String,
             enum: ['A', 'D'],
