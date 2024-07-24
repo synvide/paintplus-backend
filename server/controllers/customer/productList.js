@@ -227,6 +227,7 @@ const ProductList = ({
             {
                 $unwind: {
                     path: '$productDealer',
+                    preserveNullAndEmptyArrays: true,
                 },
             },
             {
