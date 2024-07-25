@@ -3,7 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import busboyBodyParser from 'busboy-body-parser';
 import connectDB from './db/index';
-import { PORT } from './constants';
+import { PORT, NODE_ENV } from './constants';
 import ActivateRoutes from './routes';
 
 connectDB();
@@ -18,7 +18,7 @@ ActivateRoutes(app);
 app.use(cookieParser());
 
 app.get('/', (_, res) => {
-    res.send('<h1>Paint Plus Development Server</h1>');
+    res.send(`<h1>Paint Plus ${NODE_ENV} Server</h1>`);
 });
 
 const port = PORT || 3001;
