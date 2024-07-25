@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
