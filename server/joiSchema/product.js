@@ -63,9 +63,14 @@ const productUpdate = Joi.object().keys({
     about: Joi.string(),
 }).unknown(true);
 
+const productDetail = Joi.object().keys({
+    productId: Joi.string().required(),
+}).unknown(true);
+
 export default {
     productAdd,
     productUpdate,
+    productDetail,
 };
 
 // name

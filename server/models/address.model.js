@@ -3,9 +3,8 @@ import mongoose, { Schema } from 'mongoose';
 
 const addressSchema = new Schema(
     {
-        customerRef: {
+        userRef: {
             type: Schema.Types.ObjectId,
-            ref: 'Customer',
         },
         addressLine1: {
             type: String,

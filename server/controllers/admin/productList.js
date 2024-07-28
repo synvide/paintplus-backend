@@ -1,23 +1,15 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
+import { Types } from 'mongoose';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ProductModel } from '../../models';
 
 const ProductList = ({
+    id,
     text,
     limit = 10,
     page = 1,
-    minimumPrice,
-    maximumPrice,
-    brands,
-    discount,
-    applicationType,
-    finishType,
-    paintType,
-    highToLowPriceSort,
-    lowToHighPriceSort,
-    newestArrivalsSort,
 }) => new Promise(async (resolve, reject) => {
     try {
         const searchQuery = [];
@@ -37,125 +29,13 @@ const ProductList = ({
             });
         }
 
-        const priceFilter = [];
-        if (minimumPrice && maximumPrice) {
-            priceFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $gte: ['$sellingPrice', minimumPrice],
-                            },
-                            {
-                                $lte: ['$sellingPrice', maximumPrice],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const brandFilter = [];
-        if (brands) {
-            brandFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$brand', brands],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const discountFilter = [];
-        if (discount) {
-            discountFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $gte: ['$discountPercentage', discount],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const applicationTypeFilter = [];
-        if (applicationType) {
-            applicationTypeFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$group', applicationType],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const finishTypeFilter = [];
-        if (finishType) {
-            finishTypeFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$finishType', finishType],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const paintTypeFilter = [];
-        if (paintType) {
-            paintTypeFilter.push({
-                $match: {
-                    $expr: {
-                        $and: [
-                            {
-                                $in: ['$type', paintType],
-                            },
-                        ],
-                    },
-                },
-            });
-        }
-
-        const sortFilter = {};
-        if (highToLowPriceSort) {
-            sortFilter.$sort = {
-                sellingPrice: -1,
-            };
-        } else if (lowToHighPriceSort) {
-            sortFilter.$sort = {
-                sellingPrice: 1,
-            };
-        } else if (newestArrivalsSort) {
-            sortFilter.$sort = {
-                createdAt: -1,
-            };
-        } else {
-            sortFilter.$sort = {
-                createdAt: -1,
-            };
-        }
-
         const [data] = await ProductModel.aggregate([
+            {
+                $match: {
+                    adminRef: new Types.ObjectId(id),
+                },
+            },
             ...searchQuery,
-            ...priceFilter,
-            ...brandFilter,
-            ...applicationTypeFilter,
-            ...finishTypeFilter,
-            ...paintTypeFilter,
             {
                 $lookup: {
                     from: 'productdealers',
@@ -278,8 +158,6 @@ const ProductList = ({
                     updatedAt: '$updatedAt',
                 },
             },
-            ...discountFilter,
-            sortFilter,
             {
                 $facet: {
                     list: [
@@ -299,7 +177,8 @@ const ProductList = ({
             },
             {
                 $unwind: '$total',
-            }]);
+            },
+        ]);
 
         resolve(new ApiResponseUtility({
             message: 'Product list fetched successfully.',
