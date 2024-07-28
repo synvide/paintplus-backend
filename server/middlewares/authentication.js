@@ -3,7 +3,7 @@
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import { ApiErrorUtility } from '../utility';
-import { AdminModel, CustomerModel } from '../models';
+import { AdminModel, DealerModel, CustomerModel } from '../models';
 import { ACCESS_TOKEN_SECRET } from '../constants';
 
 const prepareDecodedData = ({ token, type }) => new Promise(async (resolve, reject) => {
@@ -15,6 +15,8 @@ const prepareDecodedData = ({ token, type }) => new Promise(async (resolve, reje
             if (role === type) {
                 if (role === 'customer') {
                     userData = await CustomerModel.findOne({ _id: id });
+                } else if (role === 'dealer') {
+                    userData = await DealerModel.findOne({ _id: id });
                 } else {
                     userData = await AdminModel.findOne({ _id: id });
                 }
@@ -57,6 +59,9 @@ const commonDecodingHandler = ({
 export default {
     authenticateCustomer: (req, res, next) => commonDecodingHandler({
         req, res, next, type: 'customer',
+    }),
+    authenticateDealer: (req, res, next) => commonDecodingHandler({
+        req, res, next, type: 'dealer',
     }),
     authenticateAdmin: (req, res, next) => commonDecodingHandler({
         req, res, next, type: 'admin',

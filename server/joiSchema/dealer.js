@@ -50,7 +50,20 @@ const login = Joi.object().keys({
     password: password.required(),
 }).unknown(true);
 
+const productList = Joi.object().keys({
+    text: Joi.string(),
+}).unknown(true);
+
+const updateInventory = Joi.object().keys({
+    productId: Joi.string().required(),
+    units: Joi.number().required(),
+    availability: Joi.string().valid('Y', 'N').required(),
+    status: Joi.string().valid('Y', 'N').required(),
+}).unknown(true);
+
 export default {
     add,
     login,
+    productList,
+    updateInventory,
 };

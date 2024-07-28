@@ -22,4 +22,10 @@ export default {
     dealerLogin: (req, res, next) => dealerValidationHandler({
         req, res, next, schema: DealerJoiSchema.login,
     }),
+    productList: (req, res, next) => dealerValidationHandler({
+        req, res, next, schema: DealerJoiSchema.productList,
+    }),
+    updateInventory: (req, res, next) => dealerValidationHandler({
+        req, res, next, schema: DealerJoiSchema.updateInventory,
+    }),
 };
