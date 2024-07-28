@@ -16,7 +16,16 @@ const addressValidationHandler = ({
 };
 
 export default {
-    add: (req, res, next) => addressValidationHandler({
-        req, res, next, schema: AddressJoiSchema.add,
+    addAddress: (req, res, next) => addressValidationHandler({
+        req, res, next, schema: AddressJoiSchema.addAddress,
+    }),
+    updateAddress: (req, res, next) => addressValidationHandler({
+        req, res, next, schema: AddressJoiSchema.updateAddress,
+    }),
+    listAddress: (req, res, next) => addressValidationHandler({
+        req, res, next, schema: AddressJoiSchema.listAddress,
+    }),
+    deleteAddress: (req, res, next) => addressValidationHandler({
+        req, res, next, schema: AddressJoiSchema.deleteAddress,
     }),
 };

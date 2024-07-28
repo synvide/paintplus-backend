@@ -31,6 +31,14 @@ const addressSchema = new Schema(
         geoLocationCode: {
             type: String,
         },
+        isDefault: {
+            type: Boolean,
+            default: false,
+        },
+        deleted: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,

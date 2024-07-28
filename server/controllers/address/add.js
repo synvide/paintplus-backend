@@ -16,8 +16,12 @@ const AddAdress = ({
     geoLocationCode,
 }) => new Promise(async (resolve, reject) => {
     try {
+        const addressExists = await AddressModel.findOne({
+            customerRef: id,
+        });
+
         const address = await new AddressModel({
-            userRef: id,
+            customerRef: id,
             addressLine1,
             addressLine2,
             landmark,
@@ -25,6 +29,7 @@ const AddAdress = ({
             state,
             country,
             pincode,
+            isDefault: !addressExists,
             geoLocationCode,
         }).save();
 
