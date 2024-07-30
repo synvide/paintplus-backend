@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/named */
 import {
-    AdminSignupController, AdminLoginController, AdminProductAddController, AdminProductListController, AdminProductDetailController, AdminDealerAddController, AdminDealerLinkController, AdminProductUpdateController,
+    AdminSignupController, AdminLoginController, AdminProductAddController, AdminProductListController, AdminProductDetailController, AdminProductDeleteController, AdminDealerAddController, AdminDealerLinkController, AdminProductUpdateController,
 } from '../controllers/admin';
 import { ResolverUtility } from '../utility';
 import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
@@ -48,6 +48,12 @@ export default (app) => {
         AuthenticationMiddleware.authenticateAdmin,
         ProductValidator.productDetail,
         (req, res) => ResolverUtility(req, res, AdminProductDetailController),
+    );
+    app.post(
+        `${prefix}product/delete`,
+        AuthenticationMiddleware.authenticateAdmin,
+        ProductValidator.productDelete,
+        (req, res) => ResolverUtility(req, res, AdminProductDeleteController),
     );
     app.post(
         `${prefix}dealer/add`,

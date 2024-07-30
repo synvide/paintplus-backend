@@ -28,4 +28,7 @@ export default {
     productDetail: (req, res, next) => productValidationHandler({
         req, res, next, schema: ProductJoiSchema.productDetail,
     }),
+    productDelete: (req, res, next) => productValidationHandler({
+        req, res, next, schema: ProductJoiSchema.productDelete,
+    }),
 };
