@@ -159,6 +159,11 @@ const ProductList = ({
                 },
             },
             {
+                $sort: {
+                    createdAt: -1,
+                },
+            },
+            {
                 $facet: {
                     list: [
                         {

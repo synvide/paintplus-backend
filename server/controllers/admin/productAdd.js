@@ -5,6 +5,7 @@ import { ImageUploadService } from '../../services';
 import { ProductModel } from '../../models';
 
 const ProductAdd = ({
+    id,
     name,
     productType,
     shortDescription,
@@ -66,6 +67,7 @@ const ProductAdd = ({
             brandImageUrl = await ImageUploadService(imageName, brandImage);
         }
         const product = await new ProductModel({
+            adminRef: id,
             name,
             productType,
             shortDescription,
