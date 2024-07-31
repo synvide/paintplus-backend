@@ -86,6 +86,7 @@ const ProductDetail = ({
             {
                 $unwind: {
                     path: '$productDealer',
+                    preserveNullAndEmptyArrays: true,
                 },
             },
             {
@@ -131,7 +132,9 @@ const ProductDetail = ({
                     colour: '$colour',
                     finishType: '$finishType',
                     about: '$about',
-                    dealer: '$productDealer',
+                    dealer: {
+                        $ifNull: ['$productDealer', {}],
+                    },
                     createdAt: '$createdAt',
                     updatedAt: '$updatedAt',
                 },
