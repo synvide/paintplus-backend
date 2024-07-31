@@ -105,6 +105,7 @@ const CartDetail = ({
             {
                 $project: {
                     name: '$productDetail.name',
+                    quantity: '$quantity',
                     brand: '$productDetail.brand',
                     colour: '$productDetail.colour',
                     finishType: '$productDetail.finishType',
