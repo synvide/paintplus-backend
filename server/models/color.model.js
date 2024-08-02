@@ -7,9 +7,8 @@ const colorSchema = new Schema(
             required: true,
             trim: true,
         },
-        colorGroupRef: {
-            type: Schema.Types.ObjectId,
-            ref: 'ColorGroup',
+        groupName: {
+            type: String,
             required: true,
         },
         code: {
