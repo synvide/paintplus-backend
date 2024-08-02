@@ -22,6 +22,9 @@ export default {
     login: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.login,
     }),
+    update: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.update,
+    }),
     productList: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.productList,
     }),

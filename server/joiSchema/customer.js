@@ -40,6 +40,12 @@ const login = Joi.object().keys({
     password: password.required(),
 }).unknown(true);
 
+const update = Joi.object().keys({
+    phoneNumber: Joi.string(),
+    password: Joi.string(),
+    gender: Joi.string().valid('M', 'F', 'O'),
+}).unknown(true);
+
 const productList = Joi.object().keys({
     text: Joi.string(),
     page: Joi.number(),
@@ -74,6 +80,7 @@ const addAddress = Joi.object().keys({
 export default {
     signup,
     login,
+    update,
     productList,
     productDetail,
     addAddress,

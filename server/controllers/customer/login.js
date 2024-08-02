@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
@@ -18,11 +19,15 @@ const CustomerLogin = ({
             return reject(new ApiErrorUtility({ message: 'Incorrect password' }));
         }
 
+        await CustomerModel.findByIdAndUpdate(customerExists._id, {
+            lastLoginTime: new Date(),
+        });
+
         return resolve(new ApiResponseUtility({
             message: 'Customer logged in successfully',
             data: {
                 accessToken: await customerExists.generateAccessToken(),
-                admin: {
+                customer: {
                     email: customerExists.email,
                     createdAt: customerExists.createdAt,
                 },

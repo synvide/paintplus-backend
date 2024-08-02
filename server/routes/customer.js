@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/named */
 import {
-    CustomerSignupController, CustomerLoginController, CustomerProductListController, CustomerProductDetailController,
+    CustomerSignupController, CustomerLoginController, CustomerProductListController, CustomerProductDetailController, CustomerUpdateController, CustomerDetailController,
 } from '../controllers/customer';
 import { ResolverUtility } from '../utility';
 import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
@@ -20,6 +20,17 @@ export default (app) => {
         `${prefix}login`,
         CustomerValidator.login,
         (req, res) => ResolverUtility(req, res, CustomerLoginController),
+    );
+    app.patch(
+        `${prefix}update`,
+        AuthenticationMiddleware.authenticateCustomer,
+        CustomerValidator.update,
+        (req, res) => ResolverUtility(req, res, CustomerUpdateController),
+    );
+    app.get(
+        `${prefix}detail`,
+        AuthenticationMiddleware.authenticateCustomer,
+        (req, res) => ResolverUtility(req, res, CustomerDetailController),
     );
     app.post(
         `${prefix}product/list`,

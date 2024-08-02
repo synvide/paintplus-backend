@@ -251,14 +251,19 @@ const ProductList = ({
                     mrp: '$mrp',
                     sellingPrice: '$sellingPrice',
                     discountPercentage: {
-                        $multiply: [
+                        $round: [
                             {
-                                $divide: [
-                                    { $subtract: ['$mrp', '$sellingPrice'] },
-                                    '$mrp',
+                                $multiply: [
+                                    {
+                                        $divide: [
+                                            { $subtract: ['$mrp', '$sellingPrice'] },
+                                            '$mrp',
+                                        ],
+                                    },
+                                    100,
                                 ],
                             },
-                            100,
+                            2,
                         ],
                     },
                     tax: '$tax',
