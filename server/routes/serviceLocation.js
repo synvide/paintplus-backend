@@ -12,18 +12,19 @@ const prefix = '/api/serviceLocation/';
 export default (app) => {
     app.post(
         `${prefix}add`,
-        AuthenticationMiddleware.authenticateDealer,
+        AuthenticationMiddleware.authenticateAdmin,
         ServiceLocationValidator.addServiceLocation,
         (req, res) => ResolverUtility(req, res, ServiceLocationAddController),
     );
     app.post(
         `${prefix}list`,
-        AuthenticationMiddleware.authenticateDealer,
+        AuthenticationMiddleware.authenticateAdmin,
+        ServiceLocationValidator.listServiceLocation,
         (req, res) => ResolverUtility(req, res, ServiceLocationListController),
     );
     app.post(
         `${prefix}delete`,
-        AuthenticationMiddleware.authenticateDealer,
+        AuthenticationMiddleware.authenticateAdmin,
         ServiceLocationValidator.deleteServiceLocation,
         (req, res) => ResolverUtility(req, res, ServiceLocationDeleteController),
     );

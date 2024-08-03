@@ -4,12 +4,12 @@ import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ServiceLocationModel } from '../../models';
 
 const AddServiceLocation = ({
-    id,
+    dealerId,
     pincode,
 }) => new Promise(async (resolve, reject) => {
     try {
         const serviceLocation = await new ServiceLocationModel({
-            dealerRef: id,
+            dealerRef: dealerId,
             pincode,
         }).save();
 

@@ -22,4 +22,7 @@ export default {
     deleteServiceLocation: (req, res, next) => serviceLocationValidationHandler({
         req, res, next, schema: ServiceLocationJoiSchema.deleteServiceLocation,
     }),
+    listServiceLocation: (req, res, next) => serviceLocationValidationHandler({
+        req, res, next, schema: ServiceLocationJoiSchema.listServiceLocation,
+    }),
 };

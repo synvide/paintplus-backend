@@ -6,7 +6,7 @@ import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ServiceLocationModel } from '../../models';
 
 const ListServiceLocation = ({
-    id,
+    dealerId,
     limit = 10,
     page = 1,
 }) => new Promise(async (resolve, reject) => {
@@ -14,7 +14,7 @@ const ListServiceLocation = ({
         const [data] = await ServiceLocationModel.aggregate([
             {
                 $match: {
-                    dealerRef: new Types.ObjectId(id),
+                    dealerRef: new Types.ObjectId(dealerId),
                     deleted: false,
                 },
             },
