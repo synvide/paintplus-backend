@@ -4,13 +4,11 @@ import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ServiceLocationModel } from '../../models';
 
 const DeleteServiceLocation = ({
-    id,
     serviceLocationId,
 }) => new Promise(async (resolve, reject) => {
     try {
         const serviceLocation = await ServiceLocationModel.findOneAndUpdate({
             _id: serviceLocationId,
-            dealerRef: id,
             deleted: false,
         }, {
             $set: {
