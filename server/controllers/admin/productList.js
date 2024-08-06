@@ -147,6 +147,7 @@ const ProductList = ({
                     colour: '$colour',
                     finishType: '$finishType',
                     about: '$about',
+                    status: '$status',
                     dealer: {
                         $ifNull: ['$productDealer', {}],
                     },

@@ -91,6 +91,11 @@ const productSchema = new Schema(
         finishType: {
             type: String,
         },
+        status: {
+            type: String,
+            enum: ['Y', 'N'],
+            default: 'Y',
+        },
         about: [
             {
                 type: String,
