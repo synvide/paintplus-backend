@@ -59,6 +59,7 @@ const productUpdate = Joi.object().keys({
     image5: Joi.object(),
     warranty: Joi.string(),
     colour: Joi.string(),
+    status: Joi.string().valid('Y', 'N'),
     finishType: Joi.string(),
     about: Joi.string(),
 }).unknown(true);

@@ -33,6 +33,7 @@ const ProductUpdate = ({
     warranty,
     colour,
     finishType,
+    status,
     about = [],
 }) => new Promise(async (resolve, reject) => {
     try {
@@ -95,6 +96,7 @@ const ProductUpdate = ({
                 warranty,
                 colour,
                 finishType,
+                status,
                 about: about.length ? JSON.parse(about) : undefined,
             },
         }, { new: true });
