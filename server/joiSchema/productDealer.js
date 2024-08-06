@@ -9,6 +9,12 @@ const linkProductWithDealer = Joi.object().keys({
     status: Joi.string().required(),
 }).unknown(true);
 
+const unlinkProductWithDealer = Joi.object().keys({
+    productId: Joi.string().required(),
+    dealerId: Joi.string().required(),
+}).unknown(true);
+
 export default {
     linkProductWithDealer,
+    unlinkProductWithDealer,
 };

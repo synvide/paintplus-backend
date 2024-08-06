@@ -19,6 +19,9 @@ export default {
     dealerAdd: (req, res, next) => dealerValidationHandler({
         req, res, next, schema: DealerJoiSchema.add,
     }),
+    dealerList: (req, res, next) => dealerValidationHandler({
+        req, res, next, schema: DealerJoiSchema.dealerList,
+    }),
     dealerLogin: (req, res, next) => dealerValidationHandler({
         req, res, next, schema: DealerJoiSchema.login,
     }),

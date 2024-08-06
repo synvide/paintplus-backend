@@ -102,6 +102,10 @@ const dealerSchema = new Schema(
             required: true,
             default: new Date(),
         },
+        deleted: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,

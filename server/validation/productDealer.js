@@ -19,4 +19,7 @@ export default {
     linkProductWithDealer: (req, res, next) => customerValidationHandler({
         req, res, next, schema: ProductDealerJoiSchema.linkProductWithDealer,
     }),
+    unlinkProductWithDealer: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: ProductDealerJoiSchema.unlinkProductWithDealer,
+    }),
 };

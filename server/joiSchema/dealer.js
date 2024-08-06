@@ -61,8 +61,15 @@ const updateInventory = Joi.object().keys({
     status: Joi.string().valid('Y', 'N').required(),
 }).unknown(true);
 
+const dealerList = Joi.object().keys({
+    text: Joi.string(),
+    page: Joi.number(),
+    limit: Joi.number(),
+}).unknown(true);
+
 export default {
     add,
+    dealerList,
     login,
     productList,
     updateInventory,

@@ -105,12 +105,6 @@ const ProductList = ({
                 },
             },
             {
-                $unwind: {
-                    path: '$productDealer',
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
                 $project: {
                     _id: '$_id',
                     name: '$name',
@@ -153,7 +147,9 @@ const ProductList = ({
                     colour: '$colour',
                     finishType: '$finishType',
                     about: '$about',
-                    dealer: '$productDealer',
+                    dealer: {
+                        $ifNull: ['$productDealer', {}],
+                    },
                     createdAt: '$createdAt',
                     updatedAt: '$updatedAt',
                 },
