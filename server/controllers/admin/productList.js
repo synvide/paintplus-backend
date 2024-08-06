@@ -108,7 +108,7 @@ const ProductList = ({
                 $project: {
                     _id: '$_id',
                     name: '$name',
-                    type: '$type',
+                    productType: '$productType',
                     shortDescription: '$shortDescription',
                     longDescription: '$longDescription',
                     quantity: '$quantity',
