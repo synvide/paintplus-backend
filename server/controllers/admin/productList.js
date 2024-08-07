@@ -33,6 +33,7 @@ const ProductList = ({
             {
                 $match: {
                     adminRef: new Types.ObjectId(id),
+                    deleted: false,
                 },
             },
             ...searchQuery,
