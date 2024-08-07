@@ -150,6 +150,11 @@ const ProductList = ({
         }
 
         const [data] = await ProductModel.aggregate([
+            {
+                $match: {
+                    deleted: false,
+                }
+            },
             ...searchQuery,
             ...priceFilter,
             ...brandFilter,
