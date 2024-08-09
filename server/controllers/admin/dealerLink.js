@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable max-len */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
@@ -6,31 +7,37 @@ import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { DealerModel, ProductModel, ProductDealerModel } from '../../models';
 
 const DealerLinkWithProduct = ({
-    dealerId, productId, units, availability, status,
+    dealerIds, productId, units, availability, status,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const dealerExists = await DealerModel.findOne({ _id: dealerId });
-        if (!dealerExists) {
-            reject(new ApiErrorUtility({ message: 'Dealer not found' }));
+        const dealerExists = await DealerModel.find({ _id: { $in: dealerIds } });
+        if (dealerExists.length !== dealerIds.length) {
+            return reject(new ApiErrorUtility({ message: 'One or more dealers not found' }));
         }
 
         const productExists = await ProductModel.findOne({ _id: productId });
         if (!productExists) {
-            reject(new ApiErrorUtility({ message: 'Product not found' }));
+            return reject(new ApiErrorUtility({ message: 'Product not found' }));
         }
 
-        const productDealerExists = await ProductDealerModel.findOne({ productRef: productId, dealerRef: dealerId });
-        if (productDealerExists) {
-            reject(new ApiErrorUtility({ message: 'Product is already linked with this dealer' }));
-        }
+        // Filter out dealers that already have the product linked
+        const dealersToProcess = await Promise.all(dealerIds.map(async (dealerId) => {
+            const productDealerExists = await ProductDealerModel.findOne({ productRef: productId, dealerRef: dealerId });
+            return productDealerExists ? null : dealerId;
+        }));
 
-        await new ProductDealerModel({
-            productRef: productId,
-            dealerRef: dealerId,
-            units,
-            availability,
-            status,
-        }).save();
+        // Remove nulls from the array (dealers already linked)
+        const filteredDealerIds = dealersToProcess.filter((dealerId) => dealerId !== null);
+
+        await Promise.all(filteredDealerIds.map(async (dealerId) => {
+            await new ProductDealerModel({
+                productRef: productId,
+                dealerRef: dealerId,
+                units,
+                availability,
+                status,
+            }).save();
+        }));
 
         resolve(new ApiResponseUtility({
             message: 'Product linked with dealer successfully',

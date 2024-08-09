@@ -2,38 +2,7 @@
 import Joi from 'joi';
 
 const productAdd = Joi.object().keys({
-    name: Joi.string().required(),
-    productType: Joi.string().required(),
-    shortDescription: Joi.string(),
-    longDescription: Joi.string(),
-    quantity: Joi.number().required(),
-    group: Joi.string(),
-    subGroup: Joi.string(),
-    brand: Joi.string().required(),
-    brandImage: Joi.object(),
-    weight: Joi.number().required(),
-    length: Joi.number().required(),
-    width: Joi.number().required(),
-    height: Joi.number().required(),
-    manufacturingDate: Joi.date().required(),
-    expiryDate: Joi.date().required(),
-    specialFeature: Joi.string(),
-    mrp: Joi.number().required(),
-    sellingPrice: Joi.number().required(),
-    tax: Joi.number().required(),
-    image1: Joi.object(),
-    image2: Joi.object(),
-    image3: Joi.object(),
-    image4: Joi.object(),
-    image5: Joi.object(),
-    warranty: Joi.string(),
-    colour: Joi.string(),
-    finishType: Joi.string(),
-    about: Joi.string(),
-}).unknown(true);
-
-const productUpdate = Joi.object().keys({
-    productId: Joi.string().required(),
+    productId: Joi.string(),
     name: Joi.string(),
     productType: Joi.string(),
     shortDescription: Joi.string(),
@@ -74,7 +43,7 @@ const productDelete = Joi.object().keys({
 
 export default {
     productAdd,
-    productUpdate,
+    // productUpdate,
     productDetail,
     productDelete,
 };

@@ -19,9 +19,6 @@ export default {
     productAdd: (req, res, next) => productValidationHandler({
         req, res, next, schema: ProductJoiSchema.productAdd,
     }),
-    productUpdate: (req, res, next) => productValidationHandler({
-        req, res, next, schema: ProductJoiSchema.productUpdate,
-    }),
     // productList: (req, res, next) => productValidationHandler({
     //     req, res, next, schema: ProductJoiSchema.productList,
     // }),
