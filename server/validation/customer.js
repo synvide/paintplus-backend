@@ -25,13 +25,16 @@ export default {
     update: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.update,
     }),
+    customerList: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.customerList,
+    }),
     productList: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.productList,
     }),
     productDetail: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.productDetail,
     }),
-    adAddress: (req, res, next) => customerValidationHandler({
-        req, res, next, schema: CustomerJoiSchema.adAddress,
+    addAddress: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.addAddress,
     }),
 };

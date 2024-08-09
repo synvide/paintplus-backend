@@ -77,10 +77,17 @@ const addAddress = Joi.object().keys({
     geoLocationCode,
 }).unknown(true);
 
+const customerList = Joi.object().keys({
+    text: Joi.string(),
+    page: Joi.number(),
+    limit: Joi.number(),
+}).unknown(true);
+
 export default {
     signup,
     login,
     update,
+    customerList,
     productList,
     productDetail,
     addAddress,

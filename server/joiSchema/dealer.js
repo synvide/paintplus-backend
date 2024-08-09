@@ -67,9 +67,38 @@ const dealerList = Joi.object().keys({
     limit: Joi.number(),
 }).unknown(true);
 
+const dealerEdit = Joi.object().keys({
+    dealerId: Joi.string().required(),
+    email,
+    firstName,
+    lastName,
+    shopImage,
+    occupation,
+    gender,
+    dob,
+    countryCode,
+    phoneNumber,
+    alternatePhoneNumber,
+    addressLine1,
+    addressLine2,
+    landmark,
+    city,
+    state,
+    country,
+    pincode,
+    geoLocationCode,
+    status,
+}).unknown(true);
+
+const dealerDelete = Joi.object().keys({
+    dealerId: Joi.string().required(),
+}).unknown(true);
+
 export default {
     add,
     dealerList,
+    dealerEdit,
+    dealerDelete,
     login,
     productList,
     updateInventory,

@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 // eslint-disable-next-line import/no-import-module-exports
+import { ChildProcess } from 'child_process';
 import fs from 'fs';
 
 const skip = ['index.js'];

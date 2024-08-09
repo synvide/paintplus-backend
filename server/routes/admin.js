@@ -4,11 +4,12 @@ import {
     AdminSignupController, AdminLoginController, AdminProductAddController, AdminProductListController,
     AdminProductDetailController, AdminProductDeleteController, AdminDealerAddController, AdminDealerLinkController,
     AdminProductUpdateController, AdminColorListController, AdminDealerListController, AdminDealerUnlinkController,
+    AdminDealerEditController, AdminDealerDeleteController, AdminCustomerListController,
 } from '../controllers/admin';
 import { ResolverUtility } from '../utility';
 import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
 import {
-    AdminValidator, ProductValidator, DealerValidator, ProductDealerValidator,
+    AdminValidator, ProductValidator, DealerValidator, ProductDealerValidator, CustomerValidator,
 } from '../validation';
 
 const prefix = '/api/admin/';
@@ -70,6 +71,19 @@ export default (app) => {
         DealerValidator.dealerList,
         (req, res) => ResolverUtility(req, res, AdminDealerListController),
     );
+    app.patch(
+        `${prefix}dealer/edit`,
+        MultipartMiddleware,
+        AuthenticationMiddleware.authenticateAdmin,
+        DealerValidator.dealerEdit,
+        (req, res) => ResolverUtility(req, res, AdminDealerEditController),
+    );
+    app.delete(
+        `${prefix}dealer/delete`,
+        AuthenticationMiddleware.authenticateAdmin,
+        DealerValidator.dealerDelete,
+        (req, res) => ResolverUtility(req, res, AdminDealerDeleteController),
+    );
     app.post(
         `${prefix}dealer/unlink`,
         AuthenticationMiddleware.authenticateAdmin,
@@ -86,5 +100,11 @@ export default (app) => {
         `${prefix}colorList`,
         AuthenticationMiddleware.authenticateAdmin,
         (req, res) => ResolverUtility(req, res, AdminColorListController),
+    );
+    app.post(
+        `${prefix}customer/list`,
+        AuthenticationMiddleware.authenticateAdmin,
+        CustomerValidator.customerList,
+        (req, res) => ResolverUtility(req, res, AdminCustomerListController),
     );
 };
