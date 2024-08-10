@@ -5,6 +5,7 @@ import {
     AdminProductDetailController, AdminProductDeleteController, AdminDealerAddController, AdminDealerLinkController,
     AdminColorListController, AdminDealerListController, AdminDealerUnlinkController,
     AdminDealerEditController, AdminDealerDeleteController, AdminCustomerListController,
+    AdminCustomerEditController, AdminCustomerDeleteController, AdminDashboardController,
 } from '../controllers/admin';
 import { ResolverUtility } from '../utility';
 import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
@@ -25,6 +26,11 @@ export default (app) => {
         `${prefix}login`,
         AdminValidator.login,
         (req, res) => ResolverUtility(req, res, AdminLoginController),
+    );
+    app.post(
+        `${prefix}dashboard`,
+        AuthenticationMiddleware.authenticateAdmin,
+        (req, res) => ResolverUtility(req, res, AdminDashboardController),
     );
     app.post(
         `${prefix}product/add`,
@@ -99,5 +105,18 @@ export default (app) => {
         AuthenticationMiddleware.authenticateAdmin,
         CustomerValidator.customerList,
         (req, res) => ResolverUtility(req, res, AdminCustomerListController),
+    );
+    app.patch(
+        `${prefix}customer/edit`,
+        AuthenticationMiddleware.authenticateAdmin,
+        MultipartMiddleware,
+        CustomerValidator.customerEdit,
+        (req, res) => ResolverUtility(req, res, AdminCustomerEditController),
+    );
+    app.delete(
+        `${prefix}customer/delete`,
+        AuthenticationMiddleware.authenticateAdmin,
+        CustomerValidator.customerDelete,
+        (req, res) => ResolverUtility(req, res, AdminCustomerDeleteController),
     );
 };

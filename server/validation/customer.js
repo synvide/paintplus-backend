@@ -28,6 +28,12 @@ export default {
     customerList: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.customerList,
     }),
+    customerEdit: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.customerEdit,
+    }),
+    customerDelete: (req, res, next) => customerValidationHandler({
+        req, res, next, schema: CustomerJoiSchema.customerDelete,
+    }),
     productList: (req, res, next) => customerValidationHandler({
         req, res, next, schema: CustomerJoiSchema.productList,
     }),
