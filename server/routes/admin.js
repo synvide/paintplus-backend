@@ -4,7 +4,7 @@ import {
     AdminSignupController, AdminLoginController, AdminProductAddController, AdminProductListController,
     AdminProductDetailController, AdminProductDeleteController, AdminDealerAddController, AdminDealerLinkController,
     AdminColorListController, AdminDealerListController, AdminDealerUnlinkController,
-    AdminDealerEditController, AdminDealerDeleteController, AdminCustomerListController,
+    AdminDealerDeleteController, AdminCustomerListController,
     AdminCustomerEditController, AdminCustomerDeleteController, AdminDashboardController,
 } from '../controllers/admin';
 import { ResolverUtility } from '../utility';
@@ -69,13 +69,6 @@ export default (app) => {
         AuthenticationMiddleware.authenticateAdmin,
         DealerValidator.dealerList,
         (req, res) => ResolverUtility(req, res, AdminDealerListController),
-    );
-    app.patch(
-        `${prefix}dealer/edit`,
-        MultipartMiddleware,
-        AuthenticationMiddleware.authenticateAdmin,
-        DealerValidator.dealerEdit,
-        (req, res) => ResolverUtility(req, res, AdminDealerEditController),
     );
     app.delete(
         `${prefix}dealer/delete`,

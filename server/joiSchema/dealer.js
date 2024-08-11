@@ -22,27 +22,27 @@ const pincode = Joi.number();
 const geoLocationCode = Joi.string();
 const status = Joi.string();
 
-const add = Joi.object().keys({
-    email: email.required(),
-    password: password.required(),
-    firstName: firstName.required(),
-    lastName: lastName.required(),
-    shopImage: shopImage.required(),
-    occupation: occupation.required(),
-    gender: gender.required(),
-    dob: dob.required(),
-    countryCode: countryCode.required(),
-    phoneNumber: phoneNumber.required(),
-    alternatePhoneNumber: alternatePhoneNumber.required(),
-    addressLine1: addressLine1.required(),
-    addressLine2: addressLine2.required(),
-    landmark: landmark.required(),
-    city: city.required(),
-    state: state.required(),
-    country: country.required(),
-    pincode: pincode.required(),
-    geoLocationCode: geoLocationCode.required(),
-    status: status.required(),
+const dealerAdd = Joi.object().keys({
+    dealerId: Joi.string(),
+    email,
+    firstName,
+    lastName,
+    shopImage,
+    occupation,
+    gender,
+    dob,
+    countryCode,
+    phoneNumber,
+    alternatePhoneNumber,
+    addressLine1,
+    addressLine2,
+    landmark,
+    city,
+    state,
+    country,
+    pincode,
+    geoLocationCode,
+    status,
 }).unknown(true);
 
 const login = Joi.object().keys({
@@ -67,37 +67,13 @@ const dealerList = Joi.object().keys({
     limit: Joi.number(),
 }).unknown(true);
 
-const dealerEdit = Joi.object().keys({
-    dealerId: Joi.string().required(),
-    email,
-    firstName,
-    lastName,
-    shopImage,
-    occupation,
-    gender,
-    dob,
-    countryCode,
-    phoneNumber,
-    alternatePhoneNumber,
-    addressLine1,
-    addressLine2,
-    landmark,
-    city,
-    state,
-    country,
-    pincode,
-    geoLocationCode,
-    status,
-}).unknown(true);
-
 const dealerDelete = Joi.object().keys({
     dealerId: Joi.string().required(),
 }).unknown(true);
 
 export default {
-    add,
+    dealerAdd,
     dealerList,
-    dealerEdit,
     dealerDelete,
     login,
     productList,

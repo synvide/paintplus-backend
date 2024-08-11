@@ -1,12 +1,12 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService } from '../../services';
 import { DealerModel } from '../../models';
 
-const dealerAdd = ({
+export default ({
     id,
+    dealerId,
     email,
     password,
     occupation,
@@ -29,51 +29,82 @@ const dealerAdd = ({
     status,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const emailExists = await DealerModel.findOne({ email: email.toLowerCase() });
-        if (emailExists) {
-            reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
-        }
-
         let imageUrl;
         if (shopImage) {
             const imageName = `dealer-image-${Date.now()}`;
             imageUrl = await ImageUploadService(imageName, shopImage);
         }
 
-        const adminObject = new DealerModel({
-            adminRef: id,
-            email,
-            password,
-            firstName,
-            lastName,
-            shopImage: imageUrl,
-            occupation,
-            gender,
-            dob,
-            countryCode,
-            phoneNumber,
-            alternatePhoneNumber,
-            addressLine1,
-            addressLine2,
-            landmark,
-            city,
-            state,
-            country,
-            pincode,
-            geoLocationCode,
-            status,
-        });
-        await adminObject.save();
+        let updatedDealer;
 
-        const dealer = await DealerModel.findById(adminObject._id).select('-password -__v');
-        if (!dealer) {
-            reject(new ApiErrorUtility({ statusCode: 501, message: 'Something went wrong while adding dealer' }));
+        if (dealerId) {
+            const dealerExists = await DealerModel.findOne({ _id: dealerId });
+            if (!dealerExists) {
+                reject(new ApiErrorUtility({ message: 'Dealer not found' }));
+            }
+            updatedDealer = await DealerModel.findOneAndUpdate(
+                {
+                    _id: dealerId,
+                    adminRef: id,
+                },
+                {
+                    email,
+                    firstName,
+                    lastName,
+                    shopImage: imageUrl,
+                    occupation,
+                    gender,
+                    dob,
+                    countryCode,
+                    phoneNumber,
+                    alternatePhoneNumber,
+                    addressLine1,
+                    addressLine2,
+                    landmark,
+                    city,
+                    state,
+                    country,
+                    pincode,
+                    geoLocationCode,
+                    status,
+                },
+            );
+        } else {
+            const emailExists = await DealerModel.findOne({ email: email.toLowerCase() });
+            if (emailExists) {
+                reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
+            }
+            updatedDealer = new DealerModel({
+                adminRef: id,
+                email,
+                password,
+                firstName,
+                lastName,
+                shopImage: imageUrl,
+                occupation,
+                gender,
+                dob,
+                countryCode,
+                phoneNumber,
+                alternatePhoneNumber,
+                addressLine1,
+                addressLine2,
+                landmark,
+                city,
+                state,
+                country,
+                pincode,
+                geoLocationCode,
+                status,
+            });
+            await updatedDealer.save();
         }
 
-        resolve(new ApiResponseUtility({ message: 'Dealer added successfully!', data: dealer }));
+        resolve(new ApiResponseUtility({
+            message: dealerId ? 'Dealer updated successfully!' : 'Dealer created successfully!',
+            data: updatedDealer,
+        }));
     } catch (error) {
-        reject(new ApiErrorUtility({ message: 'Invalid Authorization', error }));
+        reject(new ApiErrorUtility({ message: 'Error while updating or creating dealer', error }));
     }
 });
-
-export default dealerAdd;

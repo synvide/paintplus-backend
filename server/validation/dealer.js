@@ -17,13 +17,10 @@ const dealerValidationHandler = ({
 
 export default {
     dealerAdd: (req, res, next) => dealerValidationHandler({
-        req, res, next, schema: DealerJoiSchema.add,
+        req, res, next, schema: DealerJoiSchema.dealerAdd,
     }),
     dealerList: (req, res, next) => dealerValidationHandler({
         req, res, next, schema: DealerJoiSchema.dealerList,
-    }),
-    dealerEdit: (req, res, next) => dealerValidationHandler({
-        req, res, next, schema: DealerJoiSchema.dealerEdit,
     }),
     dealerDelete: (req, res, next) => dealerValidationHandler({
         req, res, next, schema: DealerJoiSchema.dealerDelete,
