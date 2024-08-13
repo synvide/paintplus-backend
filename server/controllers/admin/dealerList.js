@@ -44,6 +44,9 @@ const DealerList = ({
                                         {
                                             $eq: ['$dealerRef', '$$dealerId'],
                                         },
+                                        {
+                                            $eq: ['$deleted', false],
+                                        },
                                     ],
                                 },
                             },
@@ -53,29 +56,27 @@ const DealerList = ({
                 },
             },
             {
-                $unwind: {
-                    path: '$serviceLocation',
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $group: {
-                    _id: '$_id',
-                    firstName: { $first: '$firstName' },
-                    lastName: { $first: '$lastName' },
-                    phoneNumber: { $first: '$phoneNumber' },
-                    createdAt: { $first: '$createdAt' },
-                    serviceLocations: { $push: '$serviceLocation.pincode' },
-                },
-            },
-            {
                 $project: {
                     _id: '$_id',
+                    email: '$email',
                     firstName: '$firstName',
                     lastName: '$lastName',
                     phoneNumber: '$phoneNumber',
+                    shopImage: '$shopImage',
+                    occupation: '$occupation',
+                    gender: '$gender',
+                    dob: '$dob',
+                    countryCode: '$countryCode',
+                    alternatePhoneNumber: '$alternatePhoneNumber',
+                    addressLine2: '$addressLine2',
+                    landmark: '$landmark',
+                    city: '$city',
+                    state: '$state',
+                    country: '$country',
+                    pincode: '$pincode',
+                    geoLocationCode: '$geoLocationCode',
                     createdAt: '$createdAt',
-                    serviceLocations: '$serviceLocations',
+                    serviceLocations: '$serviceLocation',
                 },
             },
             {
