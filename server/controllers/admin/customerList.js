@@ -73,7 +73,7 @@ export default ({
         resolve(new ApiResponseUtility({
             message: 'Customers list fetched successfully.',
             data: {
-                dealers: ((data || {}).list || []),
+                customers: ((data || {}).list || []),
                 page,
                 limit,
                 total: (((data || {}).total || {}).count || 0),

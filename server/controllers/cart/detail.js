@@ -65,6 +65,8 @@ const CartDetail = ({
                         },
                         {
                             $project: {
+                                _id: '$productRef',
+                                dealerRef: '$dealerRef',
                                 name: '$product.name',
                                 brand: '$product.brand',
                                 colour: '$product.colour',
@@ -104,7 +106,9 @@ const CartDetail = ({
             },
             {
                 $project: {
+                    _id: '$productDetail._id',
                     name: '$productDetail.name',
+                    dealerId: '$productDetail.dealerRef',
                     quantity: '$quantity',
                     brand: '$productDetail.brand',
                     colour: '$productDetail.colour',
