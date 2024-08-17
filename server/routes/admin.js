@@ -7,10 +7,11 @@ import {
     AdminDealerDeleteController, AdminCustomerListController,
     AdminCustomerEditController, AdminCustomerDeleteController, AdminDashboardController,
 } from '../controllers/admin';
+import OrderController from '../controllers/order';
 import { ResolverUtility } from '../utility';
 import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
 import {
-    AdminValidator, ProductValidator, DealerValidator, ProductDealerValidator, CustomerValidator,
+    AdminValidator, ProductValidator, DealerValidator, ProductDealerValidator, CustomerValidator, OrderValidator,
 } from '../validation';
 
 const prefix = '/api/admin/';
@@ -111,5 +112,18 @@ export default (app) => {
         AuthenticationMiddleware.authenticateAdmin,
         CustomerValidator.customerDelete,
         (req, res) => ResolverUtility(req, res, AdminCustomerDeleteController),
+    );
+    // Order
+    app.post(
+        `${prefix}order/list`,
+        AuthenticationMiddleware.authenticateAdmin,
+        OrderValidator.adminOrderList,
+        (req, res) => ResolverUtility(req, res, OrderController.OrderAdminListController),
+    );
+    app.post(
+        `${prefix}order/detail`,
+        AuthenticationMiddleware.authenticateAdmin,
+        OrderValidator.orderDetail,
+        (req, res) => ResolverUtility(req, res, OrderController.OrderDetailController),
     );
 };

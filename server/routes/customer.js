@@ -3,6 +3,9 @@
 import {
     CustomerSignupController, CustomerLoginController, CustomerProductListController, CustomerProductDetailController, CustomerUpdateController, CustomerDetailController,
 } from '../controllers/customer';
+import {
+    OrderCreateController,
+} from '../controllers/order';
 import { ResolverUtility } from '../utility';
 import { MultipartMiddleware, AuthenticationMiddleware } from '../middlewares';
 import { CustomerValidator } from '../validation';
@@ -32,6 +35,7 @@ export default (app) => {
         AuthenticationMiddleware.authenticateCustomer,
         (req, res) => ResolverUtility(req, res, CustomerDetailController),
     );
+    // Product
     app.post(
         `${prefix}product/list`,
         AuthenticationMiddleware.authenticateCustomer,
@@ -43,5 +47,11 @@ export default (app) => {
         AuthenticationMiddleware.authenticateCustomer,
         CustomerValidator.productDetail,
         (req, res) => ResolverUtility(req, res, CustomerProductDetailController),
+    );
+    // Order
+    app.post(
+        `${prefix}order/create`,
+        AuthenticationMiddleware.authenticateCustomer,
+        (req, res) => ResolverUtility(req, res, OrderCreateController),
     );
 };
