@@ -33,14 +33,42 @@ export default ({
             {
                 $project: {
                     _id: '$_id',
-                    firstName: '$firstName',
-                    lastName: '$lastName',
-                    email: '$email',
-                    profilePicture: '$profilePicture',
-                    status: '$status',
-                    lastLoginTime: '$lastLoginTime',
-                    phoneNumber: '$phoneNumber',
-                    createdAt: '$createdAt',
+                    firstName: {
+                        $ifNull: ['$firstName', ''],
+                    },
+                    lastName: {
+                        $ifNull: ['$lastName', ''],
+                    },
+                    profilePicture: {
+                        $ifNull: ['$profilePicture', ''],
+                    },
+                    email: {
+                        $ifNull: ['$email', ''],
+                    },
+                    status: {
+                        $ifNull: ['$status', ''],
+                    },
+                    dob: {
+                        $ifNull: ['$dob', ''],
+                    },
+                    occupation: {
+                        $ifNull: ['$occupation', ''],
+                    },
+                    lastLoginTime: {
+                        $ifNull: ['$lastLoginTime', ''],
+                    },
+                    countryCode: {
+                        $ifNull: ['$countryCode', ''],
+                    },
+                    phoneNumber: {
+                        $ifNull: ['$phoneNumber', ''],
+                    },
+                    alternatePhoneNumber: {
+                        $ifNull: ['$alternatePhoneNumber', ''],
+                    },
+                    createdAt: {
+                        $ifNull: ['$createdAt', ''],
+                    },
                 },
             },
             {

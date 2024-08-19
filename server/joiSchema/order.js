@@ -10,7 +10,21 @@ const orderDetail = Joi.object().keys({
     subOrderId: Joi.string().required(),
 }).unknown(true);
 
+
+const orderUpdate = Joi.object().keys({
+    subOrderId: Joi.string().required(),
+    dealerRef: Joi.string(),
+    shippingDate: Joi.string(),
+    status: Joi.number().valid(1, 2, 3, 4),
+}).unknown(true);
+
+const orderDelete = Joi.object().keys({
+    subOrderId: Joi.string().required(),
+}).unknown(true);
+
 export default {
     adminOrderList,
     orderDetail,
+    orderUpdate,
+    orderDelete,
 };

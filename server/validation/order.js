@@ -22,4 +22,10 @@ export default {
     orderDetail: (req, res, next) => orderValidationHandler({
         req, res, next, schema: OrderJoiSchema.orderDetail,
     }),
+    orderUpdate: (req, res, next) => orderValidationHandler({
+        req, res, next, schema: OrderJoiSchema.orderUpdate,
+    }),
+    orderDelete: (req, res, next) => orderValidationHandler({
+        req, res, next, schema: OrderJoiSchema.orderDelete,
+    }),
 };

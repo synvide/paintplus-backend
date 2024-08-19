@@ -27,6 +27,7 @@ const subOrderSchema = new Schema(
         },
         status: {
             type: Number,
+            enum: [1, 2, 3, 4],
             required: true,
         },
         shippingDate: {
@@ -35,6 +36,10 @@ const subOrderSchema = new Schema(
         },
         tax: {
             type: Number,
+        },
+        deleted: {
+            type: Boolean,
+            default: false,
         },
     },
     {
