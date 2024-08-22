@@ -6,11 +6,15 @@ import { ServiceLocationModel } from '../../models';
 const AddServiceLocation = ({
     dealerId,
     pincode,
+    locationName,
+    state,
 }) => new Promise(async (resolve, reject) => {
     try {
         const serviceLocation = await new ServiceLocationModel({
             dealerRef: dealerId,
             pincode,
+            locationName,
+            state,
         }).save();
 
         resolve(new ApiResponseUtility({ message: 'Service location added successfully.', data: serviceLocation }));

@@ -19,6 +19,9 @@ export default {
     addServiceLocation: (req, res, next) => serviceLocationValidationHandler({
         req, res, next, schema: ServiceLocationJoiSchema.addServiceLocation,
     }),
+    editServiceLocation: (req, res, next) => serviceLocationValidationHandler({
+        req, res, next, schema: ServiceLocationJoiSchema.editServiceLocation,
+    }),
     deleteServiceLocation: (req, res, next) => serviceLocationValidationHandler({
         req, res, next, schema: ServiceLocationJoiSchema.deleteServiceLocation,
     }),

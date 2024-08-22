@@ -10,6 +10,12 @@ const serviceLocationSchema = new Schema(
         pincode: {
             type: Number,
         },
+        locationName: {
+            type: String,
+        },
+        state: {
+            type: String,
+        },
         deleted: {
             type: Boolean,
             default: false,
