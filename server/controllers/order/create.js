@@ -38,7 +38,7 @@ export default ({
                 dealerRef: product.dealerId,
                 quantity: product.quantity,
                 price: product.sellingPrice,
-                status: ORDER_STATUS.PLACED,
+                status: ORDER_STATUS.NEW_ORDER,
                 shippingDate: new Date(),
                 tax: 0,
             });

@@ -3,10 +3,11 @@ export const {
 } = process.env;
 
 export const ORDER_STATUS = {
-    PLACED: 1,
-    SHIPPED: 2,
-    DELIEVERED: 3,
-    CANCELLED: 4,
+    NEW_ORDER: 1,
+    ACCEPTED: 2,
+    IN_TRANSIT: 3,
+    DELIEVERED: 4,
+    CANCELLED: 5,
 };
 
 export const ORDER_TYPE = {
