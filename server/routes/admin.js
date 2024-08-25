@@ -132,4 +132,10 @@ export default (app) => {
         OrderValidator.orderDelete,
         (req, res) => ResolverUtility(req, res, OrderController.OrderDeleteController),
     );
+
+    // Upload color excel
+    app.get(
+        `${prefix}uploadExcel`,
+        (req, res) => ResolverUtility(req, res, AdminController.AdminUploadColorShadesController),
+    );
 };
