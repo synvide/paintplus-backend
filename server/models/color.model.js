@@ -9,22 +9,19 @@ const colorSchema = new Schema(
         },
         groupName: {
             type: String,
-            required: true,
         },
-        code: {
-            type: Number,
+        ncsCode: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        hexCode: {
+            type: String,
             required: true,
             trim: true,
         },
         price: {
             type: Number,
-            required: true,
-            trim: true,
-        },
-        aed: {
-            type: Number,
-            required: true,
-            trim: true,
         },
     },
     {
