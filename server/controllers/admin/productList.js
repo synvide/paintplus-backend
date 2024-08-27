@@ -32,7 +32,6 @@ const ProductList = ({
         const [data] = await ProductModel.aggregate([
             {
                 $match: {
-                    adminRef: new Types.ObjectId(id),
                     deleted: false,
                 },
             },
