@@ -11,6 +11,7 @@ export default ({
     try {
         const numberOfProducts = await ProductModel.countDocuments({
             adminRef: id,
+            deleted: false,
         });
 
         resolve(new ApiResponseUtility({
