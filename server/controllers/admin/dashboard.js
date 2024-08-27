@@ -10,7 +10,6 @@ export default ({
 }) => new Promise(async (resolve, reject) => {
     try {
         const numberOfProducts = await ProductModel.countDocuments({
-            adminRef: id,
             deleted: false,
         });
 
