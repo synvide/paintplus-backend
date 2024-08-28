@@ -45,7 +45,6 @@ export default ({
             updatedDealer = await DealerModel.findOneAndUpdate(
                 {
                     _id: dealerId,
-                    adminRef: id,
                 },
                 {
                     email,
@@ -75,7 +74,6 @@ export default ({
                 reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
             }
             updatedDealer = new DealerModel({
-                adminRef: id,
                 email,
                 password,
                 firstName,
