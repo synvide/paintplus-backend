@@ -2,7 +2,7 @@
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { ImageUploadService } from '../../services';
+import { ImageUploadService, IdGeneratorService } from '../../services';
 import { CustomerModel } from '../../models';
 
 const CustomerSignup = ({
@@ -39,7 +39,10 @@ const CustomerSignup = ({
             profilePictureUrl = await ImageUploadService(profilePictureName, profilePicture);
         }
 
+        const customerId = await IdGeneratorService({ type: 'C' });
+
         const customerObject = new CustomerModel({
+            id: customerId,
             email,
             password,
             firstName,

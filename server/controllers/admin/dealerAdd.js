@@ -1,11 +1,10 @@
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { ImageUploadService } from '../../services';
+import { ImageUploadService, IdGeneratorService } from '../../services';
 import { DealerModel } from '../../models';
 
 export default ({
-    id,
     dealerId,
     email,
     password,
@@ -45,7 +44,6 @@ export default ({
             updatedDealer = await DealerModel.findOneAndUpdate(
                 {
                     _id: dealerId,
-                    adminRef: id,
                 },
                 {
                     email,
@@ -74,8 +72,9 @@ export default ({
             if (emailExists) {
                 reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
             }
+            const dealerid = await IdGeneratorService({ type: 'D' });
             updatedDealer = new DealerModel({
-                adminRef: id,
+                id: dealerid,
                 email,
                 password,
                 firstName,

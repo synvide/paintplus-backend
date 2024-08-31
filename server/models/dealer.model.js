@@ -6,6 +6,11 @@ import { ACCESS_TOKEN_SECRET, ACCESS_TOKEN_EXPIRY } from '../constants';
 
 const dealerSchema = new Schema(
     {
+        id: {
+            type: String,
+            required: true,
+            unique: true,
+        },
         adminRef: {
             type: Schema.Types.ObjectId,
             ref: 'Admin',

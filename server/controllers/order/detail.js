@@ -157,7 +157,7 @@ export default ({
                 $project: {
                     _id: 0,
                     customerInfo: {
-                        customerId: '$customer._id',
+                        customerId: '$customer.id',
                         name: {
                             $concat: ['$customer.firstName', ' ', '$customer.lastName'],
                         },
@@ -182,7 +182,7 @@ export default ({
                         status: '$status',
                     },
                     productInfo: {
-                        productId: '$product._id',
+                        productId: '$product.id',
                         name: '$product.name',
                         image: '$product.image1',
                         brand: '$product.brand',

@@ -3,7 +3,7 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { ProductModel } from '../../models';
+import { ProductModel, CustomerModel, DealerModel } from '../../models';
 
 export default ({
     id,
@@ -12,11 +12,19 @@ export default ({
         const numberOfProducts = await ProductModel.countDocuments({
             deleted: false,
         });
+        const numberOfCustomers = await CustomerModel.countDocuments({
+            deleted: false,
+        });
+        const numberOfDealers = await DealerModel.countDocuments({
+            deleted: false,
+        });
 
         resolve(new ApiResponseUtility({
             message: 'Dashboard fetched successfully.',
             data: {
                 numberOfProducts,
+                numberOfCustomers,
+                numberOfDealers,
             },
         }));
     } catch (error) {
