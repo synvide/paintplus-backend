@@ -27,7 +27,6 @@ const DealerList = ({
         const [data] = await DealerModel.aggregate([
             {
                 $match: {
-                    adminRef: new Types.ObjectId(id),
                     deleted: false,
                 },
             },
@@ -58,6 +57,9 @@ const DealerList = ({
             {
                 $project: {
                     _id: '$_id',
+                    dealerId: {
+                        $ifNull: ['$id', ''],
+                    },
                     email: '$email',
                     firstName: '$firstName',
                     lastName: '$lastName',

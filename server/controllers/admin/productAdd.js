@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { ImageUploadService } from '../../services';
+import { ImageUploadService, IdGeneratorService } from '../../services';
 import { ProductModel } from '../../models';
 
 const ProductUpdate = ({
@@ -108,7 +108,9 @@ const ProductUpdate = ({
             );
         } else {
             // Create a new product if productId is not provided
+            const productid = await IdGeneratorService({ type: 'P' });
             updatedProduct = await ProductModel.create({
+                id: productid,
                 name,
                 productType,
                 shortDescription,
@@ -146,6 +148,7 @@ const ProductUpdate = ({
             data: updatedProduct,
         }));
     } catch (error) {
+        console.log(error);
         reject(new ApiErrorUtility({ message: 'Error while updating or creating product', error }));
     }
 });

@@ -6,6 +6,10 @@ import { ACCESS_TOKEN_SECRET, ACCESS_TOKEN_EXPIRY } from '../constants';
 
 const customerSchema = new Schema(
     {
+        id: {
+            type: String,
+            required: true,
+        },
         firstName: {
             type: String,
             required: true,

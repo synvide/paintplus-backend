@@ -107,6 +107,9 @@ const CartDetail = ({
             {
                 $project: {
                     _id: '$productDetail._id',
+                    productId: {
+                        $ifNull: ['$productDetail.id', ''],
+                    },
                     name: '$productDetail.name',
                     dealerId: '$productDetail.dealerRef',
                     quantity: '$quantity',

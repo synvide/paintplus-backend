@@ -33,6 +33,9 @@ export default ({
             {
                 $project: {
                     _id: '$_id',
+                    customerId: {
+                        $ifNull: ['$id', ''],
+                    },
                     firstName: {
                         $ifNull: ['$firstName', ''],
                     },

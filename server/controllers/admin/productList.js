@@ -107,6 +107,9 @@ const ProductList = ({
             {
                 $project: {
                     _id: '$_id',
+                    productId: {
+                        $ifNull: ['$id', ''],
+                    },
                     name: '$name',
                     productType: '$productType',
                     shortDescription: '$shortDescription',
