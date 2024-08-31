@@ -74,7 +74,6 @@ export default ({
             }
             const dealerid = await IdGeneratorService({ type: 'D' });
             updatedDealer = new DealerModel({
-                id: dealerid,
                 email,
                 password,
                 firstName,
