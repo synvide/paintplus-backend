@@ -12,7 +12,6 @@ export default ({
     try {
         const dealer = await DealerModel.findOneAndUpdate({
             _id: dealerId,
-            adminRef: id,
             deleted: false,
         }, {
             $set: {
