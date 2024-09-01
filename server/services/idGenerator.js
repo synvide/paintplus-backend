@@ -5,9 +5,12 @@ import { CustomerModel, DealerModel, ProductModel } from '../models';
 export default async ({ type }) => {
     try {
         const today = new Date();
-        const year = String(today.getFullYear()).slice(-2);
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
+        const offsetIST = 5 * 60 + 30;
+        const todayIST = new Date(today.getTime() + offsetIST * 60 * 1000);
+
+        const year = String(todayIST.getFullYear()).slice(-2);
+        const month = String(todayIST.getMonth() + 1).padStart(2, '0');
+        const day = String(todayIST.getDate()).padStart(2, '0');
 
         const dateString = `${year}${month}${day}`;
 
