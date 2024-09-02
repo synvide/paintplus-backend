@@ -68,7 +68,7 @@ export default ({
                 },
             );
         } else {
-            const emailExists = await DealerModel.findOne({ email: email.toLowerCase() });
+            const emailExists = await DealerModel.findOne({ email: email.toLowerCase(), deleted: false });
             if (emailExists) {
                 reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
             }
