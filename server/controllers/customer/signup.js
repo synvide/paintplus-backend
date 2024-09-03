@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
@@ -28,7 +29,7 @@ const CustomerSignup = ({
     status,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const emailExists = await CustomerModel.findOne({ email: email.toLowerCase() });
+        const emailExists = await CustomerModel.findOne({ email: email.toLowerCase(), deleted: false });
         if (emailExists) {
             reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
         }
