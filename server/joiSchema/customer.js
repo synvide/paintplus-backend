@@ -2,7 +2,7 @@
 import Joi from 'joi';
 
 const email = Joi.string().email();
-const password = Joi.string().alphanum();
+const password = Joi.string();
 const firstName = Joi.string();
 const lastName = Joi.string();
 const profilePicture = Joi.object();
