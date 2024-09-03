@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable consistent-return */
@@ -10,7 +11,7 @@ const CustomerLogin = ({
     email, password,
 }) => new Promise(async (resolve, reject) => {
     try {
-        const customerExists = await CustomerModel.findOne({ email: email.toLowerCase() });
+        const customerExists = await CustomerModel.findOne({ email: email.toLowerCase(), deleted: false });
         if (!customerExists) {
             return reject(new ApiErrorUtility({ message: 'Account not found' }));
         }
