@@ -90,9 +90,11 @@ const productSchema = new Schema(
         warranty: {
             type: String,
         },
-        colour: {
-            type: String,
-        },
+        colour: [
+            {
+                type: String,
+            },
+        ],
         finishType: {
             type: String,
         },

@@ -19,13 +19,14 @@ const ColorList = ({
                     $or: [
                         { name: { $regex: new RegExp(text, 'i') } },
                         { groupName: { $regex: new RegExp(text, 'i') } },
-                        { code: { $eq: parseInt(text) } },
+                        { hexCode: { $regex: new RegExp(text, 'i') } },
+                        { ncsCode: { $regex: new RegExp(text, 'i') } },
                     ],
                 },
             });
         }
         const groupSearchQuery = [];
-        if (groupNames) {
+        if (groupNames.length) {
             groupSearchQuery.push({
                 $match: {
                     $expr: {
