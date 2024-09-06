@@ -84,11 +84,6 @@ export default (app) => {
         (req, res) => ResolverUtility(req, res, AdminController.AdminDealerLinkController),
     );
     app.post(
-        `${prefix}colorList`,
-        AuthenticationMiddleware.authenticateAdmin,
-        (req, res) => ResolverUtility(req, res, AdminController.AdminColorListController),
-    );
-    app.post(
         `${prefix}customer/list`,
         AuthenticationMiddleware.authenticateAdmin,
         CustomerValidator.customerList,
@@ -137,5 +132,12 @@ export default (app) => {
     app.get(
         `${prefix}uploadExcel`,
         (req, res) => ResolverUtility(req, res, AdminController.AdminUploadColorShadesController),
+    );
+
+    // Color
+    app.post(
+        `${prefix}colorList`,
+        AuthenticationMiddleware.authenticateAdmin,
+        (req, res) => ResolverUtility(req, res, AdminController.AdminColorListController),
     );
 };

@@ -1,8 +1,11 @@
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
+import { Types } from 'mongoose';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService, IdGeneratorService } from '../../services';
-import { ProductModel } from '../../models';
+import { ProductModel, ColorModel } from '../../models';
 
 const ProductUpdate = ({
     productId,
@@ -31,7 +34,7 @@ const ProductUpdate = ({
     image4,
     image5,
     warranty,
-    colour,
+    colour = '[]',
     finishType,
     status,
     about = [],
@@ -63,6 +66,22 @@ const ProductUpdate = ({
         if (brandImage) {
             const imageName = `productBrand-image-${Date.now()}`;
             brandImageUrl = await ImageUploadService(imageName, brandImage);
+        }
+
+        if (colour.startsWith('[') && colour.endsWith(']')) {
+            const colour_ = JSON.parse(colour);
+            const colorsArray = colour_.map((colorId) => new Types.ObjectId(colorId));
+
+            const validColors = await ColorModel.find({
+                _id: {
+                    $in: colorsArray,
+                },
+            });
+            if (validColors.length !== colour_.length) {
+                return reject(new ApiErrorUtility({ message: 'Color ids are not valid.' }));
+            }
+        } else if (colour) {
+            return reject(new ApiErrorUtility({ message: 'Colour field must be an array' }));
         }
 
         let updatedProduct;
@@ -98,7 +117,7 @@ const ProductUpdate = ({
                         image4: imageUrl4,
                         image5: imageUrl5,
                         warranty,
-                        colour,
+                        colour: colour.length ? JSON.parse(colour) : undefined,
                         finishType,
                         status,
                         about: about.length ? JSON.parse(about) : undefined,
@@ -136,7 +155,7 @@ const ProductUpdate = ({
                 image4: imageUrl4,
                 image5: imageUrl5,
                 warranty,
-                colour,
+                colour: colour.length ? JSON.parse(colour) : undefined,
                 finishType,
                 status,
                 about: about.length ? JSON.parse(about) : undefined,
