@@ -1,3 +1,5 @@
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable max-len */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
@@ -39,7 +41,7 @@ export default ({
         if (dealerId) {
             const dealerExists = await DealerModel.findOne({ _id: dealerId });
             if (!dealerExists) {
-                reject(new ApiErrorUtility({ message: 'Dealer not found' }));
+                return reject(new ApiErrorUtility({ message: 'Dealer not found' }));
             }
             updatedDealer = await DealerModel.findOneAndUpdate(
                 {
@@ -70,7 +72,7 @@ export default ({
         } else {
             const emailExists = await DealerModel.findOne({ email: email.toLowerCase(), deleted: false });
             if (emailExists) {
-                reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
+                return reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
             }
             const dealerid = await IdGeneratorService({ type: 'D' });
             updatedDealer = new DealerModel({

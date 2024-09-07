@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable max-len */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
@@ -11,17 +12,17 @@ const DealerUnlinkWithProduct = ({
     try {
         const dealerExists = await DealerModel.findOne({ _id: dealerId });
         if (!dealerExists) {
-            reject(new ApiErrorUtility({ message: 'Dealer not found' }));
+            return reject(new ApiErrorUtility({ message: 'Dealer not found' }));
         }
 
         const productExists = await ProductModel.findOne({ _id: productId });
         if (!productExists) {
-            reject(new ApiErrorUtility({ message: 'Product not found' }));
+            return reject(new ApiErrorUtility({ message: 'Product not found' }));
         }
 
         const deletedProductDealer = await ProductDealerModel.findOneAndDelete({ productRef: productId, dealerRef: dealerId });
         if (!deletedProductDealer) {
-            reject(new ApiErrorUtility({ message: 'Data not found.' }));
+            return reject(new ApiErrorUtility({ message: 'Data not found.' }));
         }
 
         resolve(new ApiResponseUtility({

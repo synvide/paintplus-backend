@@ -31,7 +31,7 @@ export default ({
     try {
         const customerExists = await CustomerModel.findOne({ _id: customerId });
         if (!customerExists) {
-            reject(new ApiErrorUtility({ message: 'Customer not found' }));
+            return reject(new ApiErrorUtility({ message: 'Customer not found' }));
         }
 
         let imageUrl;

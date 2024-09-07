@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
@@ -15,7 +16,7 @@ export default ({
             _id: subOrderId,
         });
         if (!subOrder) {
-            reject(new ApiErrorUtility({ message: 'Order not found' }));
+            return reject(new ApiErrorUtility({ message: 'Order not found' }));
         }
 
         if (dealerRef) {
@@ -24,7 +25,7 @@ export default ({
                 deleted: false,
             });
             if (!dealer) {
-                reject(new ApiErrorUtility({ message: 'Dealer not found' }));
+                return reject(new ApiErrorUtility({ message: 'Dealer not found' }));
             }
         }
 

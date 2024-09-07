@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
@@ -31,7 +32,7 @@ const CustomerSignup = ({
     try {
         const emailExists = await CustomerModel.findOne({ email: email.toLowerCase(), deleted: false });
         if (emailExists) {
-            reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
+            return reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
         }
 
         let profilePictureUrl;

@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
@@ -12,7 +13,7 @@ export default ({
             _id: subOrderId,
         });
         if (!subOrder) {
-            reject(new ApiErrorUtility({ message: 'Order not found' }));
+            return reject(new ApiErrorUtility({ message: 'Order not found' }));
         }
 
         const deletedOrder = await SubOrderModel.findByIdAndUpdate(subOrderId, {
@@ -22,7 +23,7 @@ export default ({
         });
 
         if (!deletedOrder) {
-            reject(new ApiErrorUtility({ message: 'Order not deleted' }));
+            return reject(new ApiErrorUtility({ message: 'Order not deleted' }));
         }
 
         resolve(new ApiResponseUtility({
