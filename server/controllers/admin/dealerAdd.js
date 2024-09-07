@@ -70,7 +70,7 @@ export default ({
         } else {
             const emailExists = await DealerModel.findOne({ email: email.toLowerCase(), deleted: false });
             if (emailExists) {
-                reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
+                return reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
             }
             const dealerid = await IdGeneratorService({ type: 'D' });
             updatedDealer = new DealerModel({
