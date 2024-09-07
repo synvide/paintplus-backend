@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
@@ -23,7 +24,7 @@ const UpdateProductInventory = ({
         }, { new: true });
 
         if (!updatedProductInventory) {
-            reject(new ApiErrorUtility({ statusCode: 501, message: 'Product not found' }));
+            return reject(new ApiErrorUtility({ statusCode: 501, message: 'Product not found' }));
         }
 
         resolve(new ApiResponseUtility({ message: 'Product inventory updated successfully!', data: updatedProductInventory }));

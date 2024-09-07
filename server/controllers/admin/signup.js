@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
@@ -33,11 +34,11 @@ const AdminSignup = ({
     try {
         const emailExists = await AdminModel.findOne({ email: email.toLowerCase() });
         if (emailExists) {
-            reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
+            return reject(new ApiErrorUtility({ message: `Email ${email} is already registered!` }));
         }
 
         if (secretKey !== SECRET_STRING) {
-            reject(new ApiErrorUtility({ message: 'Invalid Authorization' }));
+            return reject(new ApiErrorUtility({ message: 'Invalid Authorization' }));
         }
 
         let imageUrl;
