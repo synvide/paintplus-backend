@@ -71,7 +71,6 @@ const dealerSchema = new Schema(
         },
         addressLine2: {
             type: String,
-            required: true,
         },
         landmark: {
             type: String,
