@@ -47,8 +47,33 @@ const ProductList = ({
                                         {
                                             $eq: ['$_id', '$$productId'],
                                         },
+                                        {
+                                            $eq: ['$deleted', false],
+                                        },
                                     ],
                                 },
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: 'colors',
+                                let: {
+                                    colourArray: {
+                                        $map: {
+                                            input: '$colour',
+                                            as: 'col',
+                                            in: { $toObjectId: '$$col' },
+                                        },
+                                    },
+                                },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: { $in: ['$_id', '$$colourArray'] },
+                                        },
+                                    },
+                                ],
+                                as: 'colourDetails',
                             },
                         },
                     ],
@@ -106,7 +131,7 @@ const ProductList = ({
                         },
                     },
                     warranty: '$product.warranty',
-                    colour: '$product.colour',
+                    colour: '$product.colourDetails',
                     finishType: '$product.finishType',
                     about: '$product.about',
                     createdAt: '$createdAt',

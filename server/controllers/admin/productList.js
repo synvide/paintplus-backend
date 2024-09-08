@@ -105,6 +105,28 @@ const ProductList = ({
                 },
             },
             {
+                $lookup: {
+                    from: 'colors',
+                    let: {
+                        colourArray: {
+                            $map: {
+                                input: '$colour',
+                                as: 'col',
+                                in: { $toObjectId: '$$col' },
+                            },
+                        },
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $in: ['$_id', '$$colourArray'] },
+                            },
+                        },
+                    ],
+                    as: 'colourDetails',
+                },
+            },
+            {
                 $project: {
                     _id: '$_id',
                     productId: {
@@ -147,7 +169,7 @@ const ProductList = ({
                         },
                     },
                     warranty: '$warranty',
-                    colour: '$colour',
+                    colour: '$colourDetails',
                     finishType: '$finishType',
                     about: '$about',
                     status: '$status',
