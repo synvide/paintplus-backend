@@ -100,8 +100,8 @@ const productSchema = new Schema(
         },
         status: {
             type: String,
-            enum: ['Y', 'N'],
-            default: 'Y',
+            enum: ['A', 'D'],
+            default: 'A',
         },
         about: [
             {

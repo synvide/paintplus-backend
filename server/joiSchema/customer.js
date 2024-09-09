@@ -20,7 +20,7 @@ const state = Joi.string();
 const country = Joi.string();
 const pincode = Joi.number();
 const geoLocationCode = Joi.string();
-const status = Joi.string().valid('Y', 'N');
+const status = Joi.string().valid('A', 'D');
 
 const signup = Joi.object().keys({
     email: email.required(),
