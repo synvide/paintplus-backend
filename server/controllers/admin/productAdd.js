@@ -34,7 +34,7 @@ const ProductUpdate = ({
     image4,
     image5,
     warranty,
-    colour = '[]',
+    colour = [],
     finishType,
     status,
     about = [],
@@ -66,22 +66,6 @@ const ProductUpdate = ({
         if (brandImage) {
             const imageName = `productBrand-image-${Date.now()}`;
             brandImageUrl = await ImageUploadService(imageName, brandImage);
-        }
-
-        if (colour.startsWith('[') && colour.endsWith(']')) {
-            const colour_ = JSON.parse(colour);
-            const colorsArray = colour_.map((colorId) => new Types.ObjectId(colorId));
-
-            const validColors = await ColorModel.find({
-                _id: {
-                    $in: colorsArray,
-                },
-            });
-            if (validColors.length !== colour_.length) {
-                return reject(new ApiErrorUtility({ message: 'Color ids are not valid.' }));
-            }
-        } else if (colour) {
-            return reject(new ApiErrorUtility({ message: 'Colour field must be an array' }));
         }
 
         let updatedProduct;
@@ -125,6 +109,9 @@ const ProductUpdate = ({
                 },
                 { new: true },
             );
+            if (!updatedProduct) {
+                reject(new ApiErrorUtility({ message: 'Product not found' }));
+            }
         } else {
             // Create a new product if productId is not provided
             const productid = await IdGeneratorService({ type: 'P' });
