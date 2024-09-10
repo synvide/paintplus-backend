@@ -69,6 +69,9 @@ export default ({
                     alternatePhoneNumber: {
                         $ifNull: ['$alternatePhoneNumber', ''],
                     },
+                    pincode: {
+                        $ifNull: ['$pincode', ''],
+                    },
                     createdAt: {
                         $ifNull: ['$createdAt', ''],
                     },

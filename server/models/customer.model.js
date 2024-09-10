@@ -56,6 +56,9 @@ const customerSchema = new Schema(
         alternatePhoneNumber: {
             type: String,
         },
+        pincode: {
+            type: String,
+        },
         status: {
             type: String,
             enum: ['A', 'D'],

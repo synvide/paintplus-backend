@@ -18,7 +18,7 @@ const landmark = Joi.string();
 const city = Joi.string();
 const state = Joi.string();
 const country = Joi.string();
-const pincode = Joi.number();
+const pincode = Joi.string();
 const geoLocationCode = Joi.string();
 const status = Joi.string().valid('A', 'D');
 
@@ -34,6 +34,7 @@ const signup = Joi.object().keys({
     countryCode,
     phoneNumber,
     alternatePhoneNumber,
+    pincode,
 }).unknown(true);
 
 const login = Joi.object().keys({
