@@ -86,6 +86,29 @@ const ProductList = ({
                             },
                         },
                         {
+                            $lookup: {
+                                from: 'servicelocations',
+                                let: { dealerId: '$dealer._id' },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: {
+                                                $and: [
+                                                    {
+                                                        $eq: ['$dealerRef', '$$dealerId'],
+                                                    },
+                                                    // {
+                                                    //     $eq: ['$deleted', false],
+                                                    // },
+                                                ],
+                                            },
+                                        },
+                                    },
+                                ],
+                                as: 'serviceLocation',
+                            },
+                        },
+                        {
                             $project: {
                                 _id: '$dealer._id',
                                 dealerId: {
@@ -98,7 +121,6 @@ const ProductList = ({
                                 city: '$dealer.city',
                                 state: '$dealer.state',
                                 country: '$dealer.country',
-                                pinCode: '$dealer.pincode',
                                 addressLine1: '$dealer.addressLine1',
                                 shopImage: '$dealer.shopImage',
                                 occupation: '$dealer.occupation',
@@ -112,7 +134,7 @@ const ProductList = ({
                                 geoLocationCode: '$dealer.geoLocationCode',
                                 status: '$dealer.status',
                                 createdAt: '$dealer.createdAt',
-
+                                serviceLocation: '$serviceLocation',
                             },
                         },
                     ],
