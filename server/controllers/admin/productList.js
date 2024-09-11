@@ -55,7 +55,7 @@ const ProductList = ({
                                             $eq: ['$availability', 'Y'],
                                         },
                                         {
-                                            $eq: ['$status', 'Y'],
+                                            $eq: ['$status', 'A'],
                                         },
                                     ],
                                 },

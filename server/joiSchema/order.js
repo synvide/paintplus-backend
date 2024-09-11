@@ -22,9 +22,16 @@ const orderDelete = Joi.object().keys({
     subOrderId: Joi.string().required(),
 }).unknown(true);
 
+const activityList = Joi.object().keys({
+    subOrderId: Joi.string().required(),
+    page: Joi.number(),
+    limit: Joi.number(),
+}).unknown(true);
+
 export default {
     adminOrderList,
     orderDetail,
     orderUpdate,
     orderDelete,
+    activityList,
 };

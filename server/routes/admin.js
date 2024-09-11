@@ -127,6 +127,12 @@ export default (app) => {
         OrderValidator.orderDelete,
         (req, res) => ResolverUtility(req, res, OrderController.OrderDeleteController),
     );
+    app.post(
+        `${prefix}order/activityList`,
+        AuthenticationMiddleware.authenticateAdmin,
+        OrderValidator.activityList,
+        (req, res) => ResolverUtility(req, res, OrderController.OrderActivityListController),
+    );
 
     // Upload color excel
     app.get(

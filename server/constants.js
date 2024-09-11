@@ -13,3 +13,9 @@ export const ORDER_STATUS = {
 export const ORDER_TYPE = {
     NORMAL: 1,
 };
+
+export const USER_TYPE = {
+    ADMIN: 1,
+    DEALER: 2,
+    CUSTOMER: 3,
+};

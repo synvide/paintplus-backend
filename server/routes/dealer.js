@@ -3,8 +3,9 @@
 import {
     DealerLoginController, DealerProductListController, DealerUpdateInventoryController,
 } from '../controllers/dealer';
+import OrderController from '../controllers/order';
 import { ResolverUtility } from '../utility';
-import { DealerValidator } from '../validation';
+import { DealerValidator, OrderValidator } from '../validation';
 import { AuthenticationMiddleware } from '../middlewares';
 
 const prefix = '/api/dealer/';
@@ -26,5 +27,11 @@ export default (app) => {
         AuthenticationMiddleware.authenticateDealer,
         DealerValidator.updateInventory,
         (req, res) => ResolverUtility(req, res, DealerUpdateInventoryController),
+    );
+    app.post(
+        `${prefix}order/update`,
+        AuthenticationMiddleware.authenticateDealer,
+        OrderValidator.orderUpdate,
+        (req, res) => ResolverUtility(req, res, OrderController.OrderUpdateController),
     );
 };
