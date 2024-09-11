@@ -17,6 +17,10 @@ const subOrderSchema = new Schema(
             ref: 'Dealer',
             required: true,
         },
+        colorRef: {
+            type: Schema.Types.ObjectId,
+            ref: 'Color',
+        },
         quantity: {
             type: Number,
             default: 1,

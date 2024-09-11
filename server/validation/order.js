@@ -28,4 +28,7 @@ export default {
     orderDelete: (req, res, next) => orderValidationHandler({
         req, res, next, schema: OrderJoiSchema.orderDelete,
     }),
+    activityList: (req, res, next) => orderValidationHandler({
+        req, res, next, schema: OrderJoiSchema.activityList,
+    }),
 };
