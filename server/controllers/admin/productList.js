@@ -1,12 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
-import { Types } from 'mongoose';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ProductModel } from '../../models';
 
 const ProductList = ({
-    id,
     text,
     limit = 10,
     page = 1,
@@ -90,6 +88,10 @@ const ProductList = ({
                         {
                             $project: {
                                 _id: '$dealer._id',
+                                dealerId: {
+                                    $ifNull: ['$dealer.id', ''],
+                                },
+                                email: '$dealer.email',
                                 firstName: '$dealer.firstName',
                                 lastName: '$dealer.lastName',
                                 phoneNumber: '$dealer.phoneNumber',
@@ -98,6 +100,19 @@ const ProductList = ({
                                 country: '$dealer.country',
                                 pinCode: '$dealer.pincode',
                                 addressLine1: '$dealer.addressLine1',
+                                shopImage: '$dealer.shopImage',
+                                occupation: '$dealer.occupation',
+                                gender: '$dealer.gender',
+                                dob: '$dealer.dob',
+                                countryCode: '$dealer.countryCode',
+                                alternatePhoneNumber: '$dealer.alternatePhoneNumber',
+                                addressLine2: '$dealer.addressLine2',
+                                landmark: '$dealer.landmark',
+                                pincode: '$dealer.pincode',
+                                geoLocationCode: '$dealer.geoLocationCode',
+                                status: '$dealer.status',
+                                createdAt: '$dealer.createdAt',
+
                             },
                         },
                     ],
