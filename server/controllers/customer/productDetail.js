@@ -34,7 +34,7 @@ const ProductDetail = ({
                                             $eq: ['$availability', 'Y'],
                                         },
                                         {
-                                            $eq: ['$status', 'Y'],
+                                            $eq: ['$status', 'A'],
                                         },
                                     ],
                                 },

@@ -58,7 +58,7 @@ const updateInventory = Joi.object().keys({
     productId: Joi.string().required(),
     units: Joi.number().required(),
     availability: Joi.string().valid('Y', 'N').required(),
-    status: Joi.string().valid('Y', 'N').required(),
+    status: Joi.string().valid('A', 'D').required(),
 }).unknown(true);
 
 const dealerList = Joi.object().keys({
