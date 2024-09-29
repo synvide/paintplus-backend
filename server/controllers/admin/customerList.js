@@ -31,6 +31,43 @@ export default ({
             },
             ...searchQuery,
             {
+                $lookup: {
+                    from: 'addresses',
+                    let: { customerId: '$_id' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {
+                                            $eq: ['$customerRef', '$$customerId'],
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                customerRef: 0,
+                                isDefault: 0,
+                                deleted: 0,
+                                createdAt: 0,
+                                updatedAt: 0,
+                                __v: 0,
+                            },
+                        },
+                    ],
+                    as: 'address',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$address',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
                 $project: {
                     _id: '$_id',
                     customerId: {
@@ -70,7 +107,10 @@ export default ({
                         $ifNull: ['$alternatePhoneNumber', ''],
                     },
                     pincode: {
-                        $ifNull: ['$pincode', ''],
+                        $ifNull: ['$address.pincode', ''],
+                    },
+                    city: {
+                        $ifNull: ['$address.city', ''],
                     },
                     createdAt: {
                         $ifNull: ['$createdAt', ''],
