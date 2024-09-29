@@ -64,12 +64,34 @@ const CartDetail = ({
                             },
                         },
                         {
+                            $lookup: {
+                                from: 'colors',
+                                let: {
+                                    colourArray: {
+                                        $map: {
+                                            input: '$product.colour',
+                                            as: 'col',
+                                            in: { $toObjectId: '$$col' },
+                                        },
+                                    },
+                                },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: { $in: ['$_id', '$$colourArray'] },
+                                        },
+                                    },
+                                ],
+                                as: 'colourDetails',
+                            },
+                        },
+                        {
                             $project: {
                                 _id: '$productRef',
                                 dealerRef: '$dealerRef',
                                 name: '$product.name',
                                 brand: '$product.brand',
-                                colour: '$product.colour',
+                                colour: '$colourDetails',
                                 finishType: '$product.finishType',
                                 size: '$product.quantity',
                                 mrp: '$product.mrp',
