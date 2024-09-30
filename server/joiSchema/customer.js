@@ -15,10 +15,10 @@ const alternatePhoneNumber = Joi.string();
 const addressLine1 = Joi.string();
 const addressLine2 = Joi.string();
 const landmark = Joi.string();
-const city = Joi.string();
+const city = Joi.string().required();
 const state = Joi.string();
 const country = Joi.string();
-const pincode = Joi.string();
+const pincode = Joi.string().required();
 const geoLocationCode = Joi.string();
 const status = Joi.string().valid('A', 'D');
 
