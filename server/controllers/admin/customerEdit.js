@@ -1,10 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable consistent-return */
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService } from '../../services';
-import { CustomerModel } from '../../models';
+import { CustomerModel, AddressModel } from '../../models';
+import AddressController from '../address';
 
 export default ({
     customerId,
@@ -55,6 +57,18 @@ export default ({
                 countryCode,
                 phoneNumber,
                 alternatePhoneNumber,
+                status,
+            },
+        );
+
+        const defaultAddress = await AddressModel.findOne({
+            customerRef: customerId,
+            isDefault: true,
+        });
+        if (defaultAddress) {
+            await AddressController.AddressUpdateController({
+                id: customerId,
+                addressId: defaultAddress._id,
                 addressLine1,
                 addressLine2,
                 landmark,
@@ -63,9 +77,8 @@ export default ({
                 country,
                 pincode,
                 geoLocationCode,
-                status,
-            },
-        );
+            });
+        }
 
         if (!updatedCustomer) {
             return reject(new ApiErrorUtility({ statusCode: 501, message: 'Customer not found.' }));

@@ -5,6 +5,7 @@
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService, IdGeneratorService } from '../../services';
+import AddressController from '../address';
 import { CustomerModel } from '../../models';
 
 const CustomerSignup = ({
@@ -56,6 +57,12 @@ const CustomerSignup = ({
             countryCode,
             phoneNumber,
             alternatePhoneNumber,
+            status,
+        });
+        await customerObject.save();
+
+        await AddressController.AddressAddController({
+            id: customerObject._id,
             addressLine1,
             addressLine2,
             landmark,
@@ -64,9 +71,7 @@ const CustomerSignup = ({
             country,
             pincode,
             geoLocationCode,
-            status,
         });
-        await customerObject.save();
 
         const customer = await CustomerModel.findById(customerObject._id).select('-password -__v');
         if (!customer) {
@@ -75,6 +80,7 @@ const CustomerSignup = ({
 
         resolve(new ApiResponseUtility({ message: 'Customer has signed up successfully!', data: customer }));
     } catch (error) {
+        console.log(error);
         reject(new ApiErrorUtility({ message: 'Error while customer signup', error }));
     }
 });

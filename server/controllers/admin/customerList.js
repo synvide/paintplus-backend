@@ -42,6 +42,9 @@ export default ({
                                         {
                                             $eq: ['$customerRef', '$$customerId'],
                                         },
+                                        {
+                                            $eq: ['$isDefault', true],
+                                        },
                                     ],
                                 },
                             },
