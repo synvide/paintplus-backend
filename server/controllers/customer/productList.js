@@ -153,7 +153,8 @@ const ProductList = ({
             {
                 $match: {
                     deleted: false,
-                }
+                    status: 'A',
+                },
             },
             ...searchQuery,
             ...priceFilter,
