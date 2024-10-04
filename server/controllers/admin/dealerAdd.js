@@ -67,10 +67,13 @@ export default ({
                     country,
                     pincode,
                     location: {
-                        address: '',
-                        coordinates: [longitude, latitude],
+                        type: 'Point',
+                        coordinates: [longitude || dealerExists.location.coordinates[0], latitude || dealerExists.location.coordinates[1]],
                     },
                     status,
+                },
+                {
+                    new: true,
                 },
             );
         } else {

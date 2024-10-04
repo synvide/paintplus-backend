@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
@@ -29,6 +30,16 @@ const UpdateAddress = ({
             });
         }
 
+        const addedAddress = await AddressModel.findOne({
+            _id: addressId,
+            customerRef: id,
+            deleted: false,
+        });
+
+        if (!addedAddress) {
+            reject(new ApiErrorUtility({ statusCode: 501, message: 'Address not found.' }));
+        }
+
         const updatedAddress = await AddressModel.findOneAndUpdate({
             _id: addressId,
             customerRef: id,
@@ -43,12 +54,12 @@ const UpdateAddress = ({
                 country,
                 pincode,
                 location: {
-                    address: '',
-                    coordinates: [longitude, latitude],
+                    type: 'Point',
+                    coordinates: [longitude || addedAddress.location.coordinates[0], latitude || addedAddress.location.coordinates[1]],
                 },
                 isDefault: setDefault,
             },
-        });
+        }, { new: true });
 
         if (!updatedAddress) {
             reject(new ApiErrorUtility({ statusCode: 501, message: 'Address not found.' }));
