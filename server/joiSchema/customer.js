@@ -19,7 +19,8 @@ const city = Joi.string().required();
 const state = Joi.string();
 const country = Joi.string();
 const pincode = Joi.string().required();
-const geoLocationCode = Joi.string();
+const latitude = Joi.number();
+const longitude = Joi.number();
 const status = Joi.string().valid('A', 'D');
 
 const signup = Joi.object().keys({
@@ -76,7 +77,8 @@ const addAddress = Joi.object().keys({
     state,
     country,
     pincode,
-    geoLocationCode,
+    latitude,
+    longitude,
 }).unknown(true);
 
 const customerList = Joi.object().keys({
@@ -104,7 +106,6 @@ const customerEdit = Joi.object().keys({
     state,
     country,
     pincode,
-    geoLocationCode,
     status,
 }).unknown(true);
 

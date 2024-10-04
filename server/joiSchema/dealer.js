@@ -19,7 +19,8 @@ const city = Joi.string();
 const state = Joi.string();
 const country = Joi.string();
 const pincode = Joi.number();
-const geoLocationCode = Joi.string();
+const latitude = Joi.number();
+const longitude = Joi.number();
 const status = Joi.string();
 
 const dealerAdd = Joi.object().keys({
@@ -41,7 +42,8 @@ const dealerAdd = Joi.object().keys({
     state,
     country,
     pincode,
-    geoLocationCode,
+    latitude,
+    longitude,
     status,
 }).unknown(true);
 

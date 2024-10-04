@@ -26,7 +26,8 @@ export default ({
     state,
     country,
     pincode,
-    geoLocationCode,
+    latitude,
+    longitude,
     status,
 }) => new Promise(async (resolve, reject) => {
     try {
@@ -65,7 +66,10 @@ export default ({
                     state,
                     country,
                     pincode,
-                    geoLocationCode,
+                    location: {
+                        address: '',
+                        coordinates: [longitude, latitude],
+                    },
                     status,
                 },
             );
@@ -95,7 +99,10 @@ export default ({
                 state,
                 country,
                 pincode,
-                geoLocationCode,
+                location: {
+                    address: '',
+                    coordinates: [longitude, latitude],
+                },
                 status,
             });
             await updatedDealer.save();

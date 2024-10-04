@@ -92,9 +92,12 @@ const dealerSchema = new Schema(
             type: Number,
             required: true,
         },
+        location: {
+            type: { type: String, default: 'Point' },
+            coordinates: [Number, Number],
+        },
         geoLocationCode: {
             type: String,
-            required: true,
         },
         status: {
             type: String,
@@ -140,5 +143,7 @@ dealerSchema.methods.generateAccessToken = function () {
         },
     );
 };
+
+dealerSchema.index({ location: '2dsphere' });
 
 export default mongoose.model('dealer', dealerSchema);

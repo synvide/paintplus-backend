@@ -13,7 +13,8 @@ const UpdateAddress = ({
     state,
     country,
     pincode,
-    geoLocationCode,
+    latitude,
+    longitude,
     setDefault,
 }) => new Promise(async (resolve, reject) => {
     try {
@@ -41,7 +42,10 @@ const UpdateAddress = ({
                 state,
                 country,
                 pincode,
-                geoLocationCode,
+                location: {
+                    address: '',
+                    coordinates: [longitude, latitude],
+                },
                 isDefault: setDefault,
             },
         });

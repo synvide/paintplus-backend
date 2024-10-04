@@ -28,6 +28,10 @@ const addressSchema = new Schema(
         pincode: {
             type: Number,
         },
+        location: {
+            type: { type: String, default: 'Point' },
+            coordinates: [Number, Number],
+        },
         geoLocationCode: {
             type: String,
         },
@@ -44,5 +48,7 @@ const addressSchema = new Schema(
         timestamps: true,
     },
 );
+
+addressSchema.index({ location: '2dsphere' });
 
 export default mongoose.model('address', addressSchema);

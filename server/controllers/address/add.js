@@ -13,7 +13,8 @@ const AddAdress = ({
     state,
     country,
     pincode,
-    geoLocationCode,
+    latitude,
+    longitude,
 }) => new Promise(async (resolve, reject) => {
     try {
         const addressExists = await AddressModel.findOne({
@@ -30,7 +31,10 @@ const AddAdress = ({
             country,
             pincode,
             isDefault: !addressExists,
-            geoLocationCode,
+            location: {
+                address: '',
+                coordinates: [longitude, latitude],
+            },
         }).save();
 
         if (!address) {

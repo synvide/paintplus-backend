@@ -1,10 +1,12 @@
+/* eslint-disable max-len */
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { ProductModel } from '../../models';
+import { ProductModel, AddressModel } from '../../models';
 
 const ProductList = ({
+    id,
     text,
     limit = 10,
     page = 1,
@@ -149,6 +151,11 @@ const ProductList = ({
             };
         }
 
+        const customerAddress = await AddressModel.findOne({
+            customerRef: id,
+            isDefault: true,
+        });
+
         const [data] = await ProductModel.aggregate([
             {
                 $match: {
@@ -189,9 +196,60 @@ const ProductList = ({
                         },
                         {
                             $lookup: {
+                                from: 'servicelocations',
+                                let: { dealerId: '$dealerRef' },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: {
+                                                $and: [
+                                                    {
+                                                        $eq: ['$deleted', false],
+                                                    },
+                                                    {
+                                                        $eq: ['$pincode', customerAddress.pincode],
+                                                    },
+                                                    {
+                                                        $eq: ['$dealerRef', '$$dealerId'],
+                                                    },
+                                                ],
+                                            },
+                                        },
+                                    },
+                                ],
+                                as: 'dealerServiceLocations',
+                            },
+                        },
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {
+                                            $gt: [
+                                                {
+                                                    $size: '$dealerServiceLocations',
+                                                },
+                                                0,
+                                            ],
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                        {
+                            $lookup: {
                                 from: 'dealers',
                                 let: { dealerId: '$dealerRef' },
                                 pipeline: [
+                                    // {
+                                    //     $geoNear: {
+                                    //         near: { type: 'Point', coordinates: [customerAddress.location.coordinates[0], customerAddress.location.coordinates[1]] },
+                                    //         distanceField: 'distance',
+                                    //         key: 'location',
+                                    //         maxDistance: 10000,
+                                    //         spherical: true,
+                                    //     },
+                                    // },
                                     {
                                         $match: {
                                             $expr: {
@@ -207,33 +265,56 @@ const ProductList = ({
                                 as: 'dealer',
                             },
                         },
-                        {
-                            $unwind: {
-                                path: '$dealer',
-                                preserveNullAndEmptyArrays: true,
-                            },
-                        },
+                        // {
+                        //     $match: {
+                        //         $expr: {
+                        //             $and: [
+                        //                 {
+                        //                     $gt: [
+                        //                         {
+                        //                             $size: '$dealer.distance',
+                        //                         },
+                        //                         0,
+                        //                     ],
+                        //                 },
+                        //             ],
+                        //         },
+                        //     },
+                        // },
                         {
                             $project: {
-                                _id: '$dealer._id',
-                                firstName: '$dealer.firstName',
-                                lastName: '$dealer.lastName',
-                                phoneNumber: '$dealer.phoneNumber',
-                                city: '$dealer.city',
-                                state: '$dealer.state',
-                                country: '$dealer.country',
-                                pinCode: '$dealer.pincode',
-                                addressLine1: '$dealer.addressLine1',
+                                _id: {
+                                    $first: '$dealer._id',
+                                },
+                                firstName: {
+                                    $first: '$dealer.firstName',
+                                },
+                                lastName: {
+                                    $first: '$dealer.lastName',
+                                },
+                                phoneNumber: {
+                                    $first: '$dealer.phoneNumber',
+                                },
+                                city: {
+                                    $first: '$dealer.city',
+                                },
+                                state: {
+                                    $first: '$dealer.state',
+                                },
+                                country: {
+                                    $first: '$dealer.country',
+                                },
+                                pinCode: {
+                                    $first: '$dealer.pinCode',
+                                },
+                                addressLine1: {
+                                    $first: '$dealer.addressLine1',
+                                },
+                                dealerServiceLocations: '$dealerServiceLocations',
                             },
                         },
                     ],
                     as: 'productDealer',
-                },
-            },
-            {
-                $unwind: {
-                    path: '$productDealer',
-                    preserveNullAndEmptyArrays: true,
                 },
             },
             {
