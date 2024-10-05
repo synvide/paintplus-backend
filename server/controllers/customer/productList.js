@@ -207,7 +207,7 @@ const ProductList = ({
                                                         $eq: ['$deleted', false],
                                                     },
                                                     {
-                                                        $eq: ['$pincode', customerAddress.pincode],
+                                                        $eq: ['$pincode', customerAddress ? customerAddress.pincode : ''],
                                                     },
                                                     {
                                                         $eq: ['$dealerRef', '$$dealerId'],
