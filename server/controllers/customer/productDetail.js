@@ -107,12 +107,12 @@ const ProductDetail = ({
                                 as: 'dealer',
                             },
                         },
-                        {
-                            $unwind: {
-                                path: '$dealer',
-                                preserveNullAndEmptyArrays: true,
-                            },
-                        },
+                        // {
+                        //     $unwind: {
+                        //         path: '$dealer',
+                        //         preserveNullAndEmptyArrays: true,
+                        //     },
+                        // },
                         {
                             $project: {
                                 _id: {
