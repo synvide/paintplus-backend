@@ -3,12 +3,17 @@
 /* eslint-disable import/named */
 import { Types } from 'mongoose';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
-import { ProductModel } from '../../models';
+import { AddressModel, ProductModel } from '../../models';
 
 const ProductDetail = ({
+    id,
     productId,
 }) => new Promise(async (resolve, reject) => {
     try {
+        const customerAddress = await AddressModel.findOne({
+            customerRef: id,
+            isDefault: true,
+        });
         const [data] = await ProductModel.aggregate([
             {
                 $match: {
@@ -42,6 +47,48 @@ const ProductDetail = ({
                         },
                         {
                             $lookup: {
+                                from: 'servicelocations',
+                                let: { dealerId: '$dealerRef' },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: {
+                                                $and: [
+                                                    {
+                                                        $eq: ['$deleted', false],
+                                                    },
+                                                    {
+                                                        $eq: ['$pincode', customerAddress.pincode],
+                                                    },
+                                                    {
+                                                        $eq: ['$dealerRef', '$$dealerId'],
+                                                    },
+                                                ],
+                                            },
+                                        },
+                                    },
+                                ],
+                                as: 'dealerServiceLocations',
+                            },
+                        },
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {
+                                            $gt: [
+                                                {
+                                                    $size: '$dealerServiceLocations',
+                                                },
+                                                0,
+                                            ],
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                        {
+                            $lookup: {
                                 from: 'dealers',
                                 let: { dealerId: '$dealerRef' },
                                 pipeline: [
@@ -68,25 +115,38 @@ const ProductDetail = ({
                         },
                         {
                             $project: {
-                                _id: '$dealer._id',
-                                firstName: '$dealer.firstName',
-                                lastName: '$dealer.lastName',
-                                phoneNumber: '$dealer.phoneNumber',
-                                city: '$dealer.city',
-                                state: '$dealer.state',
-                                country: '$dealer.country',
-                                pinCode: '$dealer.pincode',
-                                addressLine1: '$dealer.addressLine1',
+                                _id: {
+                                    $first: '$dealer._id',
+                                },
+                                firstName: {
+                                    $first: '$dealer.firstName',
+                                },
+                                lastName: {
+                                    $first: '$dealer.lastName',
+                                },
+                                phoneNumber: {
+                                    $first: '$dealer.phoneNumber',
+                                },
+                                city: {
+                                    $first: '$dealer.city',
+                                },
+                                state: {
+                                    $first: '$dealer.state',
+                                },
+                                country: {
+                                    $first: '$dealer.country',
+                                },
+                                pinCode: {
+                                    $first: '$dealer.pinCode',
+                                },
+                                addressLine1: {
+                                    $first: '$dealer.addressLine1',
+                                },
+                                dealerServiceLocations: '$dealerServiceLocations',
                             },
                         },
                     ],
                     as: 'productDealer',
-                },
-            },
-            {
-                $unwind: {
-                    path: '$productDealer',
-                    preserveNullAndEmptyArrays: true,
                 },
             },
             {
@@ -163,7 +223,7 @@ const ProductDetail = ({
                     finishType: '$finishType',
                     about: '$about',
                     dealer: {
-                        $ifNull: ['$productDealer', {}],
+                        $ifNull: ['$productDealer', []],
                     },
                     createdAt: '$createdAt',
                     updatedAt: '$updatedAt',
