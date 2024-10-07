@@ -5,7 +5,6 @@
 /* eslint-disable no-async-promise-executor */
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService, IdGeneratorService } from '../../services';
-import AddressController from '../address';
 import { CustomerModel } from '../../models';
 
 const CustomerSignup = ({
@@ -20,14 +19,6 @@ const CustomerSignup = ({
     countryCode,
     phoneNumber,
     alternatePhoneNumber,
-    addressLine1,
-    addressLine2,
-    landmark,
-    city,
-    state,
-    country,
-    pincode,
-    geoLocationCode,
     status,
 }) => new Promise(async (resolve, reject) => {
     try {
@@ -60,18 +51,6 @@ const CustomerSignup = ({
             status,
         });
         await customerObject.save();
-
-        await AddressController.AddressAddController({
-            id: customerObject._id,
-            addressLine1,
-            addressLine2,
-            landmark,
-            city,
-            state,
-            country,
-            pincode,
-            geoLocationCode,
-        });
 
         const customer = await CustomerModel.findById(customerObject._id).select('-password -__v');
         if (!customer) {
