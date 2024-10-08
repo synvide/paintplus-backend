@@ -38,6 +38,7 @@ const ProductUpdate = ({
     finishType,
     status,
     about = [],
+    isTopDeal,
 }) => new Promise(async (resolve, reject) => {
     try {
         let imageUrl1; let imageUrl2; let imageUrl3; let imageUrl4; let imageUrl5; let
@@ -105,6 +106,7 @@ const ProductUpdate = ({
                         finishType,
                         status,
                         about: about.length ? JSON.parse(about) : undefined,
+                        isTopDeal,
                     },
                 },
                 { new: true },
@@ -146,6 +148,7 @@ const ProductUpdate = ({
                 finishType,
                 status,
                 about: about.length ? JSON.parse(about) : undefined,
+                isTopDeal,
             });
         }
 

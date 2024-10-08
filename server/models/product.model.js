@@ -108,6 +108,10 @@ const productSchema = new Schema(
                 type: String,
             },
         ],
+        isTopDeal: {
+            type: Boolean,
+            default: false,
+        },
         deleted: {
             type: Boolean,
             default: false,

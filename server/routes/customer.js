@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/named */
 import {
-    CustomerSignupController, CustomerLoginController, CustomerProductListController, CustomerProductDetailController, CustomerUpdateController, CustomerDetailController,
+    CustomerSignupController, CustomerLoginController, CustomerProductListController, CustomerProductDetailController, CustomerUpdateController, CustomerDetailController, CustomerTopDealsController,
 } from '../controllers/customer';
 import {
     OrderCreateController,
@@ -34,6 +34,10 @@ export default (app) => {
         `${prefix}detail`,
         AuthenticationMiddleware.authenticateCustomer,
         (req, res) => ResolverUtility(req, res, CustomerDetailController),
+    );
+    app.post(
+        `${prefix}topDeals`,
+        (req, res) => ResolverUtility(req, res, CustomerTopDealsController),
     );
     // Product
     app.post(
