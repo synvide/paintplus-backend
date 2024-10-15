@@ -151,6 +151,8 @@ const ProductDetail = ({
                     colour: '$colourDetails',
                     finishType: '$finishType',
                     about: '$about',
+                    isExpress: '$isExpress',
+                    isTopDeal: '$isTopDeal',
                     dealer: {
                         $ifNull: ['$productDealer', {}],
                     },

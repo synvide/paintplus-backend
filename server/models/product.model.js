@@ -112,6 +112,10 @@ const productSchema = new Schema(
             type: Boolean,
             default: false,
         },
+        isExpress: {
+            type: Boolean,
+            default: false,
+        },
         deleted: {
             type: Boolean,
             default: false,

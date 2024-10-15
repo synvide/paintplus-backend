@@ -368,6 +368,8 @@ const ProductList = ({
                     colour: '$colour',
                     finishType: '$finishType',
                     about: '$about',
+                    isExpress: '$isExpress',
+                    isTopDeal: '$isTopDeal',
                     dealer: '$productDealer',
                     createdAt: '$createdAt',
                     updatedAt: '$updatedAt',
