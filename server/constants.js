@@ -1,5 +1,6 @@
 export const {
     NODE_ENV,
+    BASE_URL,
     MONGO_CONNECTION_STRING,
     PORT,
     ACCESS_TOKEN_SECRET,

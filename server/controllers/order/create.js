@@ -4,7 +4,7 @@
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { AddressModel, OrderModel, SubOrderModel } from '../../models';
 import { CartDetailController } from '../cart';
-import { ORDER_STATUS, ORDER_TYPE } from '../../constants';
+import { ORDER_STATUS, ORDER_TYPE, BASE_URL } from '../../constants';
 
 export default ({
     id,
@@ -44,7 +44,7 @@ export default ({
             });
         });
 
-        const paymentUrl = `http://localhost:3000/api/payment/webPage?id=${id}&orderId=${order._id}`;
+        const paymentUrl = `${BASE_URL}payment/webPage?id=${id}&orderId=${order._id}`;
 
         resolve(new ApiResponseUtility({ message: 'Order placed successfully.', data: paymentUrl }));
     } catch (error) {
