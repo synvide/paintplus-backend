@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true, limit: '20kb' }));
 app.use(busboyBodyParser());
 ActivateRoutes(app);
 app.use(cookieParser());
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
 app.get('/', (_, res) => {
     res.send(`<h1>Paint Plus ${NODE_ENV} Server</h1>`);

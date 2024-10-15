@@ -44,7 +44,9 @@ export default ({
             });
         });
 
-        resolve(new ApiResponseUtility({ message: 'Order placed successfully.', data: order }));
+        const paymentUrl = `http://localhost:3000/api/payment/webPage?id=${id}&orderId=${order._id}`;
+
+        resolve(new ApiResponseUtility({ message: 'Order placed successfully.', data: paymentUrl }));
     } catch (error) {
         console.log(error);
         reject(new ApiErrorUtility({ message: 'Error while placing order.', error }));
