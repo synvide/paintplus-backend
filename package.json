@@ -38,7 +38,6 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
-    "razorpay": "^2.9.4",
-    "xlsx": "^0.18.5"
+    "razorpay": "^2.9.4"
   }
 }
