@@ -2,20 +2,18 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
 /* eslint-disable no-async-promise-executor */
-import { Types } from 'mongoose';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { ImageUploadService, IdGeneratorService } from '../../services';
-import { ProductModel, ColorModel } from '../../models';
+import { ProductModel } from '../../models';
 
 const ProductUpdate = ({
     productId,
     name,
-    productType,
     shortDescription,
     longDescription,
     quantity,
-    group,
-    subGroup,
+    category,
+    subCategory,
     brand,
     brandImage,
     weight,
@@ -79,12 +77,11 @@ const ProductUpdate = ({
                 {
                     $set: {
                         name,
-                        productType,
                         shortDescription,
                         longDescription,
                         quantity,
-                        group,
-                        subGroup,
+                        category,
+                        subCategory,
                         brand,
                         brandImage: brandImageUrl,
                         weight,
@@ -122,12 +119,11 @@ const ProductUpdate = ({
             updatedProduct = await ProductModel.create({
                 id: productid,
                 name,
-                productType,
                 shortDescription,
                 longDescription,
                 quantity,
-                group,
-                subGroup,
+                category,
+                subCategory,
                 brand,
                 brandImage: brandImageUrl,
                 weight,

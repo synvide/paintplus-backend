@@ -16,9 +16,6 @@ const productSchema = new Schema(
             required: true,
             trim: true,
         },
-        productType: {
-            type: String,
-        },
         shortDescription: {
             type: String,
         },
@@ -28,10 +25,10 @@ const productSchema = new Schema(
         quantity: {
             type: String,
         },
-        group: {
+        category: {
             type: String,
         },
-        subGroup: {
+        subCategory: {
             type: String,
         },
         brand: {
