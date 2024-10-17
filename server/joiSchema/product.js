@@ -29,7 +29,7 @@ const productAdd = Joi.object().keys({
     warranty: Joi.string(),
     colour: Joi.string(),
     status: Joi.string().valid('A', 'D'),
-    finishType: Joi.string(),
+    finishType: Joi.string().allow(''),
     about: Joi.string(),
 }).unknown(true);
 
