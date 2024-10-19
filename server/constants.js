@@ -12,6 +12,7 @@ export const {
     S3_IMAGE_URL,
     RAZORPAY_ID_KEY,
     RAZORPAY_SECRET_KEY,
+    GOOGLE_PLACE_API_KEY,
 } = process.env;
 
 export const ORDER_STATUS = {
