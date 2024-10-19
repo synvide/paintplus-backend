@@ -44,9 +44,12 @@ const login = Joi.object().keys({
 }).unknown(true);
 
 const update = Joi.object().keys({
-    phoneNumber: Joi.string(),
-    password: Joi.string(),
+    firstName,
+    lastName,
+    alternatePhoneNumber,
+    email,
     gender: Joi.string().valid('M', 'F', 'O'),
+    dob,
 }).unknown(true);
 
 const productList = Joi.object().keys({

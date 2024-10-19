@@ -2,12 +2,11 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable import/named */
-import bcrypt from 'bcrypt';
 import { ApiResponseUtility, ApiErrorUtility } from '../../utility';
 import { CustomerModel } from '../../models';
 
 const CustomerUpdate = ({
-    id, phoneNumber, password, gender,
+    id, firstName, lastName, email, gender, dob, alternatePhoneNumber,
 }) => new Promise(async (resolve, reject) => {
     try {
         const customerExists = await CustomerModel.findOne({ _id: id });
@@ -16,9 +15,12 @@ const CustomerUpdate = ({
         }
 
         const updatedCustomer = await CustomerModel.findByIdAndUpdate(id, {
-            phoneNumber,
-            password: password ? await bcrypt.hash(password, 10) : undefined,
+            firstName,
+            lastName,
+            alternatePhoneNumber,
+            email,
             gender,
+            dob,
         });
 
         return resolve(new ApiResponseUtility({

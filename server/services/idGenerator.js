@@ -10,7 +10,7 @@ export default async ({ type }) => {
 
         const year = String(todayIST.getFullYear()).slice(-2);
         const month = String(todayIST.getMonth() + 1).padStart(2, '0');
-        const day = String(todayIST.getDate()).padStart(2, '0');
+        const day = String(todayIST.getUTCDate()).padStart(2, '0');
 
         const dateString = `${year}${month}${day}`;
 
