@@ -3,7 +3,7 @@ import Joi from 'joi';
 
 const addAddress = Joi.object().keys({
     address: Joi.string().required(),
-    landmark: Joi.string(),
+    landmark: Joi.string().allow(''),
     city: Joi.string().required(),
     state: Joi.string().required(),
     country: Joi.string(),
@@ -16,7 +16,7 @@ const updateAddress = Joi.object().keys({
     addressId: Joi.string().required(),
     addressLine1: Joi.string(),
     addressLine2: Joi.string(),
-    landmark: Joi.string(),
+    landmark: Joi.string().allow(''),
     city: Joi.string(),
     state: Joi.string(),
     country: Joi.string(),
