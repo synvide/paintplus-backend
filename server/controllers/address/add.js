@@ -6,8 +6,8 @@ import { AddressModel } from '../../models';
 
 const AddAdress = ({
     id,
-    addressLine1,
-    addressLine2 = '',
+    address,
+    addressType,
     landmark,
     city,
     state,
@@ -21,10 +21,10 @@ const AddAdress = ({
             customerRef: id,
         });
 
-        const address = await new AddressModel({
+        const addedAddress = await new AddressModel({
             customerRef: id,
-            addressLine1,
-            addressLine2,
+            address,
+            addressType,
             landmark,
             city,
             state,
@@ -37,11 +37,11 @@ const AddAdress = ({
             },
         }).save();
 
-        if (!address) {
+        if (!addedAddress) {
             reject(new ApiErrorUtility({ statusCode: 501, message: 'Something went wrong while adding address' }));
         }
 
-        resolve(new ApiResponseUtility({ message: 'Address added successfully!', data: address }));
+        resolve(new ApiResponseUtility({ message: 'Address added successfully!', data: addedAddress }));
     } catch (error) {
         reject(new ApiErrorUtility({ message: 'Error while adding address', error }));
     }

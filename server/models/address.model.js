@@ -7,10 +7,10 @@ const addressSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Customer',
         },
-        addressLine1: {
+        address: {
             type: String,
         },
-        addressLine2: {
+        addressType: {
             type: String,
         },
         landmark: {

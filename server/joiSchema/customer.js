@@ -12,12 +12,11 @@ const dob = Joi.date();
 const countryCode = Joi.string();
 const phoneNumber = Joi.string();
 const alternatePhoneNumber = Joi.string();
-const addressLine1 = Joi.string();
-const addressLine2 = Joi.string();
-const landmark = Joi.string();
+const address = Joi.string();
+const landmark = Joi.string().allow('');
 const city = Joi.string();
 const state = Joi.string();
-const country = Joi.string();
+const country = Joi.string().allow('');
 const pincode = Joi.string();
 const latitude = Joi.number();
 const longitude = Joi.number();
@@ -73,8 +72,7 @@ const productDetail = Joi.object().keys({
 }).unknown(true);
 
 const addAddress = Joi.object().keys({
-    addressLine1,
-    addressLine2,
+    address,
     landmark,
     city,
     state,
@@ -102,8 +100,7 @@ const customerEdit = Joi.object().keys({
     countryCode,
     phoneNumber,
     alternatePhoneNumber,
-    addressLine1,
-    addressLine2,
+    address,
     landmark,
     city,
     state,

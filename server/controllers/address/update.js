@@ -7,8 +7,8 @@ import { AddressModel } from '../../models';
 const UpdateAddress = ({
     id,
     addressId,
-    addressLine1,
-    addressLine2,
+    address,
+    addressType,
     landmark,
     city,
     state,
@@ -46,8 +46,8 @@ const UpdateAddress = ({
             deleted: false,
         }, {
             $set: {
-                addressLine1,
-                addressLine2,
+                address,
+                addressType,
                 landmark,
                 city,
                 state,
