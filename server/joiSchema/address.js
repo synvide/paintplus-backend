@@ -2,13 +2,13 @@
 import Joi from 'joi';
 
 const addAddress = Joi.object().keys({
-    addressLine1: Joi.string().required(),
-    addressLine2: Joi.string(),
+    address: Joi.string().required(),
     landmark: Joi.string().required(),
     city: Joi.string().required(),
     state: Joi.string().required(),
     country: Joi.string().required(),
     pincode: Joi.number().required(),
+    addressType: Joi.string().required(),
     geoLocationCode: Joi.string(),
 }).unknown(true);
 
@@ -21,6 +21,7 @@ const updateAddress = Joi.object().keys({
     state: Joi.string(),
     country: Joi.string(),
     pincode: Joi.number(),
+    addressType: Joi.string(),
     geoLocationCode: Joi.string(),
 }).unknown(true);
 
