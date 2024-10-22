@@ -3,10 +3,10 @@ import Joi from 'joi';
 
 const addAddress = Joi.object().keys({
     address: Joi.string().required(),
-    landmark: Joi.string().required(),
+    landmark: Joi.string(),
     city: Joi.string().required(),
     state: Joi.string().required(),
-    country: Joi.string().required(),
+    country: Joi.string(),
     pincode: Joi.number().required(),
     addressType: Joi.string().required(),
     geoLocationCode: Joi.string(),
