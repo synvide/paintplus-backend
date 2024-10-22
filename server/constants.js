@@ -1,3 +1,5 @@
+import { FilterRuleName } from "@aws-sdk/client-s3";
+
 export const {
     NODE_ENV,
     BASE_URL,
@@ -37,4 +39,9 @@ export const TRANSACTION_STATUS = {
     PENDING: 1,
     COMPLETED: 2,
     FAILED: 3,
+};
+
+export const ADVISOR_WORK_MODE = {
+    PART_TIME: 1,
+    FULL_TIME: 2,
 };
