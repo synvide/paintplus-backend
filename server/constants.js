@@ -45,3 +45,8 @@ export const ADVISOR_WORK_MODE = {
     PART_TIME: 1,
     FULL_TIME: 2,
 };
+
+export const WISHLIST_ACTION = {
+    ADD: 1,
+    REMOVE: 2,
+};
