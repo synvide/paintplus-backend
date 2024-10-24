@@ -21,6 +21,8 @@ const CustomerUpdate = ({
             email,
             gender,
             dob,
+        }, {
+            new: true,
         });
 
         return resolve(new ApiResponseUtility({
